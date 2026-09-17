@@ -324,12 +324,6 @@ p{margin:0 0 1em}
 .prog-detail li{margin-bottom:9px}
 .prog-detail strong{color:#fff}
 
-/* ---- skills gained chips ---- */
-.gained{display:flex;flex-wrap:wrap;gap:9px;margin-top:34px}
-.g-chip{font-size:.81rem;padding:8px 14px;border-radius:999px;border:1px solid var(--line);color:#bcc3d2;
-  background:rgba(255,255,255,.025);transition:.25s;cursor:default}
-.g-chip:hover{color:#1a1405;background:var(--grad);border-color:transparent;transform:translateY(-3px)}
-
 /* ---- certificate lightbox ---- */
 .lightbox{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:28px;
   background:rgba(5,6,9,.93);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:.3s}
