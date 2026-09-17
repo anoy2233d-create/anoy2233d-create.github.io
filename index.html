@@ -76,72 +76,148 @@
         </div>
       </div>
 
-      <div class="flow-widget hero-anim" data-hero="widget" id="flowWidget" aria-hidden="true">
-        <svg class="fw-svg" viewBox="0 0 600 400" role="img" aria-hidden="true" focusable="false">
-          <defs>
-            <path id="fwPath" d="M72 210 L192 190 L312 220 L432 198 L552 178"/>
-            <filter id="fwBlur" x="-70%" y="-70%" width="240%" height="240%">
-              <feGaussianBlur stdDeviation="7"/>
-            </filter>
-          </defs>
+      <div class="flow-widget hero-anim" data-hero="widget" id="flowWidget">
+        <div class="fw-tabs" role="tablist" aria-label="Process view">
+          <button class="fw-tab is-active" type="button" role="tab" data-scene="prod" aria-selected="true">Production</button>
+          <button class="fw-tab" type="button" role="tab" data-scene="supply" aria-selected="false">Supply Chain</button>
+        </div>
 
-          <!-- conveyor line -->
-          <path class="fw-line" d="M72 210 L192 190 L312 220 L432 198 L552 178"/>
+        <div class="fw-stage" id="fwStage">
 
-          <!-- bottleneck (QC) glow: steady 2s pulse + a 6s surge -->
-          <rect class="fw-glow"  x="268" y="199" width="88" height="42" rx="10" filter="url(#fwBlur)"/>
-          <rect class="fw-surge" x="268" y="199" width="88" height="42" rx="10" filter="url(#fwBlur)"/>
+          <div class="fw-scene fw-scene--prod is-active" data-scene="prod">
+            <svg class="fw-svg" viewBox="0 0 600 400" role="img" aria-hidden="true" focusable="false">
+              <defs>
+                <path id="fwPath" d="M72 210 L192 190 L312 220 L432 198 L552 178"/>
+                <filter id="fwBlur" x="-70%" y="-70%" width="240%" height="240%">
+                  <feGaussianBlur stdDeviation="7"/>
+                </filter>
+              </defs>
 
-          <!-- stations -->
-          <g class="fw-station">
-            <rect x="28" y="189" width="88" height="42" rx="10"/>
-            <text x="72" y="253">Input</text>
-          </g>
-          <g class="fw-station">
-            <rect x="148" y="169" width="88" height="42" rx="10"/>
-            <text x="192" y="233">Assembly</text>
-          </g>
-          <g class="fw-station fw-qc">
-            <rect x="268" y="199" width="88" height="42" rx="10"/>
-            <text x="312" y="263">QC</text>
-            <rect class="fw-flash" x="268" y="199" width="88" height="42" rx="10"/>
-          </g>
-          <g class="fw-station">
-            <rect x="388" y="177" width="88" height="42" rx="10"/>
-            <text x="432" y="241">Pack</text>
-          </g>
-          <g class="fw-station">
-            <rect x="508" y="157" width="88" height="42" rx="10"/>
-            <text x="552" y="221">Ship</text>
-          </g>
+              <!-- conveyor line -->
+              <path class="fw-line" d="M72 210 L192 190 L312 220 L432 198 L552 178"/>
 
-          <!-- work units travelling the line (5 dots, 400ms apart, 4s traverse) -->
-          <circle class="fw-dot" r="5" style="animation-delay:0s">
-            <animateMotion dur="4s" repeatCount="indefinite" begin="0s"><mpath href="#fwPath"/></animateMotion>
-          </circle>
-          <circle class="fw-dot" r="5" style="animation-delay:.4s">
-            <animateMotion dur="4s" repeatCount="indefinite" begin="0.4s"><mpath href="#fwPath"/></animateMotion>
-          </circle>
-          <circle class="fw-dot" r="5" style="animation-delay:.8s">
-            <animateMotion dur="4s" repeatCount="indefinite" begin="0.8s"><mpath href="#fwPath"/></animateMotion>
-          </circle>
-          <circle class="fw-dot" r="5" style="animation-delay:1.2s">
-            <animateMotion dur="4s" repeatCount="indefinite" begin="1.2s"><mpath href="#fwPath"/></animateMotion>
-          </circle>
-          <circle class="fw-dot" r="5" style="animation-delay:1.6s">
-            <animateMotion dur="4s" repeatCount="indefinite" begin="1.6s"><mpath href="#fwPath"/></animateMotion>
-          </circle>
-        </svg>
+              <!-- bottleneck (QC) glow: steady 2s pulse + a 6s surge -->
+              <rect class="fw-glow"  x="268" y="199" width="88" height="42" rx="10" filter="url(#fwBlur)"/>
+              <rect class="fw-surge" x="268" y="199" width="88" height="42" rx="10" filter="url(#fwBlur)"/>
 
-        <span class="fw-chip fw-chip-1">
-          <b>SMV</b><span class="fw-val" data-fw="smv">0.42 min</span>
-        </span>
-        <span class="fw-chip fw-chip-2">
-          <b>Line Balance</b><span class="fw-val" data-fw="lb">94%</span>
-        </span>
-        <span class="fw-chip fw-chip-3">
-          <b>Takt Time</b><span class="fw-val" data-fw="takt">38s</span>
-        </span>
+              <!-- stations -->
+              <g class="fw-station">
+                <rect x="28" y="189" width="88" height="42" rx="10"/>
+                <text x="72" y="253">Input</text>
+              </g>
+              <g class="fw-station">
+                <rect x="148" y="169" width="88" height="42" rx="10"/>
+                <text x="192" y="233">Assembly</text>
+              </g>
+              <g class="fw-station fw-qc">
+                <rect x="268" y="199" width="88" height="42" rx="10"/>
+                <text x="312" y="263">QC</text>
+                <rect class="fw-flash" x="268" y="199" width="88" height="42" rx="10"/>
+              </g>
+              <g class="fw-station">
+                <rect x="388" y="177" width="88" height="42" rx="10"/>
+                <text x="432" y="241">Pack</text>
+              </g>
+              <g class="fw-station">
+                <rect x="508" y="157" width="88" height="42" rx="10"/>
+                <text x="552" y="221">Ship</text>
+              </g>
+
+              <!-- work units travelling the line (5 dots, 400ms apart, 4s traverse) -->
+              <circle class="fw-dot" r="5" style="animation-delay:0s">
+                <animateMotion dur="4s" repeatCount="indefinite" begin="0s"><mpath href="#fwPath"/></animateMotion>
+              </circle>
+              <circle class="fw-dot" r="5" style="animation-delay:.4s">
+                <animateMotion dur="4s" repeatCount="indefinite" begin="0.4s"><mpath href="#fwPath"/></animateMotion>
+              </circle>
+              <circle class="fw-dot" r="5" style="animation-delay:.8s">
+                <animateMotion dur="4s" repeatCount="indefinite" begin="0.8s"><mpath href="#fwPath"/></animateMotion>
+              </circle>
+              <circle class="fw-dot" r="5" style="animation-delay:1.2s">
+                <animateMotion dur="4s" repeatCount="indefinite" begin="1.2s"><mpath href="#fwPath"/></animateMotion>
+              </circle>
+              <circle class="fw-dot" r="5" style="animation-delay:1.6s">
+                <animateMotion dur="4s" repeatCount="indefinite" begin="1.6s"><mpath href="#fwPath"/></animateMotion>
+              </circle>
+            </svg>
+
+            <span class="fw-chip fw-chip-1">
+              <b>SMV</b><span class="fw-val" data-fw="smv">0.42 min</span>
+            </span>
+            <span class="fw-chip fw-chip-2">
+              <b>Line Balance</b><span class="fw-val" data-fw="lb">94%</span>
+            </span>
+            <span class="fw-chip fw-chip-3">
+              <b>Takt Time</b><span class="fw-val" data-fw="takt">38s</span>
+            </span>
+          </div>
+
+          <div class="fw-scene fw-scene--supply" data-scene="supply" aria-hidden="true">
+            <svg class="fw-svg" viewBox="0 0 600 400" role="img" aria-hidden="true" focusable="false">
+              <defs>
+                <path id="fwPathSupply" d="M84 205 L228 185 L372 215 L516 193"/>
+                <filter id="fwBlurS" x="-70%" y="-70%" width="240%" height="240%">
+                  <feGaussianBlur stdDeviation="7"/>
+                </filter>
+              </defs>
+
+              <!-- route -->
+              <path class="fw-line" d="M84 205 L228 185 L372 215 L516 193"/>
+
+              <!-- bottleneck (Distribution) glow -->
+              <rect class="fw-glow"  x="328" y="194" width="88" height="42" rx="10" filter="url(#fwBlurS)"/>
+              <rect class="fw-surge" x="328" y="194" width="88" height="42" rx="10" filter="url(#fwBlurS)"/>
+
+              <!-- stations -->
+              <g class="fw-station">
+                <rect x="40" y="184" width="88" height="42" rx="10"/>
+                <text x="84" y="248">Supplier</text>
+              </g>
+              <g class="fw-station">
+                <rect x="184" y="164" width="88" height="42" rx="10"/>
+                <text x="228" y="228">Warehouse</text>
+              </g>
+              <g class="fw-station fw-bn">
+                <rect x="328" y="194" width="88" height="42" rx="10"/>
+                <text x="372" y="258">Distribution</text>
+                <rect class="fw-flash" x="328" y="194" width="88" height="42" rx="10"/>
+              </g>
+              <g class="fw-station">
+                <rect x="472" y="172" width="88" height="42" rx="10"/>
+                <text x="516" y="236">Retail</text>
+              </g>
+
+              <!-- packages travelling the route (4, 400ms apart, 4s traverse) -->
+              <g class="fw-pkg" style="animation-delay:0s">
+                <rect x="-5" y="-5" width="10" height="10" rx="2"/><path d="M-5 0h10"/>
+                <animateMotion dur="4s" repeatCount="indefinite" begin="0s"><mpath href="#fwPathSupply"/></animateMotion>
+              </g>
+              <g class="fw-pkg" style="animation-delay:.4s">
+                <rect x="-5" y="-5" width="10" height="10" rx="2"/><path d="M-5 0h10"/>
+                <animateMotion dur="4s" repeatCount="indefinite" begin="0.4s"><mpath href="#fwPathSupply"/></animateMotion>
+              </g>
+              <g class="fw-pkg" style="animation-delay:.8s">
+                <rect x="-5" y="-5" width="10" height="10" rx="2"/><path d="M-5 0h10"/>
+                <animateMotion dur="4s" repeatCount="indefinite" begin="0.8s"><mpath href="#fwPathSupply"/></animateMotion>
+              </g>
+              <g class="fw-pkg" style="animation-delay:1.2s">
+                <rect x="-5" y="-5" width="10" height="10" rx="2"/><path d="M-5 0h10"/>
+                <animateMotion dur="4s" repeatCount="indefinite" begin="1.2s"><mpath href="#fwPathSupply"/></animateMotion>
+              </g>
+            </svg>
+
+            <span class="fw-chip fw-chip-1">
+              <b>Lead Time</b><span class="fw-val" data-fw="lead">4.2 days</span>
+            </span>
+            <span class="fw-chip fw-chip-2">
+              <b>On-Time Delivery</b><span class="fw-val" data-fw="otd">96%</span>
+            </span>
+            <span class="fw-chip fw-chip-3">
+              <b>Inventory Turns</b><span class="fw-val" data-fw="turns">8.3x</span>
+            </span>
+          </div>
+
+        </div>
       </div>
     </div>
 
@@ -1344,8 +1420,8 @@
 </script>
 
 <!-- ============================================================
-     HERO — "Live Process Flow" widget: entrance timing + chip
-     number cycling. Vanilla JS only (the flow itself is CSS/SVG).
+     HERO — "Live Process Flow" widget: entrance, scene switcher,
+     auto-cycle, chip number cycling. Vanilla JS only.
      ============================================================ -->
 <script>
 (function () {
@@ -1354,31 +1430,96 @@
   if (!widget) return;
 
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var svg = widget.querySelector("svg");
+  var scenes = Array.prototype.slice.call(widget.querySelectorAll(".fw-scene"));
+  var tabs = Array.prototype.slice.call(widget.querySelectorAll(".fw-tab"));
+  var current = "prod", autoTimer = null, inView = false, autoOn = false;
+  var AUTO_MS = 8000;
 
-  /* reduced motion: freeze the diagram, no entrance, no ticking */
+  function svgOf(sc) { return sc ? sc.querySelector("svg") : null; }
+  function hold(sc) { var s = svgOf(sc); if (s && s.pauseAnimations) s.pauseAnimations(); }
+  function release(sc, restart) {
+    var s = svgOf(sc);
+    if (!s) return;
+    if (restart && s.setCurrentTime) { try { s.setCurrentTime(0); } catch (e) { /* ignore */ } }
+    if (s.unpauseAnimations) s.unpauseAnimations();
+  }
+
+  /* TASK 2 — cross-fade scenes; the incoming flow restarts from zero */
+  function activate(name) {
+    current = name;
+    scenes.forEach(function (sc) {
+      var on = sc.getAttribute("data-scene") === name;
+      sc.classList.toggle("is-active", on);
+      sc.setAttribute("aria-hidden", on ? "false" : "true");
+      if (on) release(sc, true); else hold(sc);
+    });
+    tabs.forEach(function (t) {
+      var on = t.getAttribute("data-scene") === name;
+      t.classList.toggle("is-active", on);
+      t.setAttribute("aria-selected", on ? "true" : "false");
+    });
+  }
+
+  /* TASK 3 — auto-cycle every 8s, only while the widget is in view */
+  function schedule() {
+    clearTimeout(autoTimer);
+    if (reduce || !autoOn || !inView) return;
+    autoTimer = setTimeout(function () {
+      activate(current === "prod" ? "supply" : "prod");
+      schedule();
+    }, AUTO_MS);
+  }
+
+  /* tab clicks restart the 8s timer so it never fights the user */
+  tabs.forEach(function (t) {
+    t.addEventListener("click", function () {
+      activate(t.getAttribute("data-scene"));
+      schedule();
+    });
+  });
+
+  /* reduced motion: freeze the diagram, no entrance, no auto-cycle */
   if (reduce) {
-    if (svg && svg.pauseAnimations) svg.pauseAnimations();
+    scenes.forEach(hold);
     return;
   }
 
-  /* hold the travelling dots until the widget has entered */
-  if (svg && svg.pauseAnimations) svg.pauseAnimations();
+  /* hold both flows until the widget has entered */
+  scenes.forEach(hold);
 
   /* ENTRANCE — matches the hero timeline (fade + scale at t=1200ms) */
   setTimeout(function () {
     widget.classList.add("in");
-    setTimeout(function () {                       // then release the flow
+    setTimeout(function () {                       // then release the active flow
       widget.classList.add("fw-run");
-      if (svg && svg.unpauseAnimations) svg.unpauseAnimations();
+      autoOn = true;
+      scenes.forEach(function (sc) {
+        if (sc.classList.contains("is-active")) release(sc, true); else hold(sc);
+      });
+      schedule();
     }, 500);
   }, 1200);
 
+  /* pause the auto-cycle entirely while the widget is off-screen */
+  if (window.IntersectionObserver) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        inView = e.isIntersecting;
+        if (inView) schedule(); else clearTimeout(autoTimer);
+      });
+    }, { threshold: 0.2 }).observe(widget);
+  } else {
+    inView = true;
+  }
+
   /* FLOATING CHIPS — tick each number with a blur + fade swap */
   var TICK = {
-    smv:  { min: 0.40, max: 0.44, dec: 2, suffix: " min", every: 3000 },
-    lb:   { min: 92,   max: 96,   dec: 0, suffix: "%",    every: 3200 },
-    takt: { min: 36,   max: 40,   dec: 0, suffix: "s",    every: 2800 }
+    smv:   { min: 0.40, max: 0.44, dec: 2, suffix: " min",  every: 3000 },
+    lb:    { min: 92,   max: 96,   dec: 0, suffix: "%",     every: 3200 },
+    takt:  { min: 36,   max: 40,   dec: 0, suffix: "s",     every: 2800 },
+    lead:  { min: 3.8,  max: 4.6,  dec: 1, suffix: " days", every: 3100 },
+    otd:   { min: 95,   max: 98,   dec: 0, suffix: "%",     every: 2900 },
+    turns: { min: 7.8,  max: 8.8,  dec: 1, suffix: "x",     every: 3300 }
   };
   Object.keys(TICK).forEach(function (key, i) {
     var el = widget.querySelector('[data-fw="' + key + '"]');

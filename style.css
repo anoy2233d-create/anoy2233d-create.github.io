@@ -819,3 +819,71 @@ p{margin:0 0 1em}
   .hero .flow-widget .fw-dot{opacity:0}
   .hero .flow-widget .fw-chip{transform:none}
 }
+
+/* ============================================================
+   HERO — process-flow widget: scene switcher + "Supply Chain"
+   ============================================================ */
+
+/* tabs (only rendered when JS is on) */
+.hero .fw-tabs{display:none}
+.js .hero .fw-tabs{display:flex;gap:8px;justify-content:flex-end;margin-bottom:14px}
+.hero .fw-tab{font:inherit;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:6px 14px;border-radius:999px;cursor:pointer;
+  background:transparent;border:1px solid var(--line);color:var(--muted);
+  transition:color 200ms ease,border-color 200ms ease,background 200ms ease}
+.hero .fw-tab:hover{color:var(--text);border-color:var(--line-2)}
+.hero .fw-tab.is-active{background:var(--grad);border-color:transparent;color:#1a1405}
+
+/* base (no-JS): the Production scene is plain, Supply Chain is not rendered */
+.hero .fw-scene{position:relative}
+.hero .fw-scene--supply{display:none}
+
+/* with JS: stack the scenes so they can cross-fade */
+.js .hero .fw-stage{position:relative;width:100%;aspect-ratio:600/400}
+.js .hero .fw-scene{position:absolute;inset:0;display:block;
+  opacity:0;transform:scale(.98);pointer-events:none;
+  transition:opacity 300ms ease,transform 300ms ease}
+.js .hero .fw-scene.is-active{opacity:1;transform:none;pointer-events:auto}
+.js .hero .fw-scene .fw-svg{height:100%}
+
+/* packages (Supply Chain work units) */
+.hero .fw-pkg{opacity:0;animation:fw-dotfade 4s linear infinite}
+.hero .fw-pkg rect{fill:rgba(78,205,196,.18);stroke:rgba(78,205,196,.85);stroke-width:1}
+.hero .fw-pkg path{fill:none;stroke:rgba(78,205,196,.85);stroke-width:1}
+
+/* bottleneck border on either scene */
+.hero .fw-qc > rect:first-child,
+.hero .fw-bn > rect:first-child{stroke:rgba(232,180,81,.5)}
+
+/* Supply Chain flash — packages reach Distribution at ~66.7% of the 4s traverse */
+.hero .fw-scene--supply .fw-flash{animation-name:fw-flashS}
+@keyframes fw-flashS{
+  0%{opacity:0;transform:scale(1)}
+  66.7%{opacity:0;transform:scale(1)}
+  70.45%{opacity:.9;transform:scale(1.06)}
+  74.2%{opacity:0;transform:scale(1)}
+  76.7%{opacity:0;transform:scale(1)}
+  80.45%{opacity:.9;transform:scale(1.06)}
+  84.2%{opacity:0;transform:scale(1)}
+  86.7%{opacity:0;transform:scale(1)}
+  90.45%{opacity:.9;transform:scale(1.06)}
+  94.2%{opacity:0;transform:scale(1)}
+  96.7%{opacity:0;transform:scale(1)}
+  98.2%{opacity:.9;transform:scale(1.06)}
+  99.7%{opacity:0;transform:scale(1)}
+  100%{opacity:0;transform:scale(1)}
+}
+
+/* don't animate the hidden scene */
+.js .hero .fw-scene:not(.is-active) .fw-glow,
+.js .hero .fw-scene:not(.is-active) .fw-surge,
+.js .hero .fw-scene:not(.is-active) .fw-flash,
+.js .hero .fw-scene:not(.is-active) .fw-dot,
+.js .hero .fw-scene:not(.is-active) .fw-pkg,
+.js .hero .fw-scene:not(.is-active) .fw-chip{animation-play-state:paused}
+
+/* reduced motion: no cross-fade, no packages */
+@media (prefers-reduced-motion:reduce){
+  .js .hero .fw-scene{transition:none}
+  .hero .flow-widget .fw-pkg{animation:none !important;opacity:0}
+}
