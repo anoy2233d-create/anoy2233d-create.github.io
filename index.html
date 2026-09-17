@@ -223,46 +223,36 @@
   <section id="training" class="section alt training">
     <div class="container">
       <p class="eyebrow">04 — Training</p>
-      <h2 class="section-title">Certified. <span class="grad">Battle-tested.</span> Ready for the floor.</h2>
+      <h2 class="section-title">Trained to <span class="grad">see waste.</span><br>Equipped to remove it.</h2>
       <p class="section-lead">
-        Two deep, hands-on programs — <strong>Production &amp; Operation Excellence</strong> and
-        <strong>Data Analytics</strong> — turned into real shop-floor tools: SMV, line balancing,
-        DMAIC, TQM and data-driven decisions. Every certificate below is verifiable.
+        Two intensive, hands-on programs — <strong>Production &amp; Operation Excellence</strong> and
+        <strong>Data Analytics</strong> — rebuilt into the tools I use on the floor every day: measuring work with
+        <strong>SMV &amp; PMTS</strong>, finding the bottleneck and <strong>balancing the line</strong>, removing variation with
+        <strong>Six Sigma &amp; DMAIC</strong>, and letting <strong>data — not guesswork — drive the decision</strong>.
       </p>
 
-      <!-- animated learning portal -->
-      <div class="portal-wrap reveal">
-        <div class="portal" id="portal">
-          <div class="portal-halo"></div>
-          <div class="portal-dust"></div>
-          <div class="ring-guide rg1"></div>
-          <div class="ring-guide rg2"></div>
-          <div class="ring-guide rg3"></div>
-          <div class="portal-core"><span>IE<br>OPEX</span></div>
+      <!-- line-balancing visual -->
+      <div class="line-viz reveal" id="lineViz">
+        <div class="lv-top">
+          <div class="lv-tag">Core concept · Line Balancing</div>
+          <div class="lv-br"><span>Balancing ratio</span><b id="brVal">73%</b></div>
+        </div>
 
-          <div class="ring r1">
-            <span class="node" style="--d:0s">SMV</span>
-            <span class="node" style="--d:-8.67s">PMTS</span>
-            <span class="node" style="--d:-17.33s">8 Wastes</span>
-          </div>
-          <div class="ring r2">
-            <span class="node" style="--d:0s">DMAIC</span>
-            <span class="node" style="--d:-10s">FMEA</span>
-            <span class="node" style="--d:-20s">SPC</span>
-            <span class="node" style="--d:-30s">DOE</span>
-          </div>
-          <div class="ring r3">
-            <span class="node" style="--d:0s">TQM</span>
-            <span class="node" style="--d:-14s">ISO 9001</span>
-            <span class="node" style="--d:-28s">5S</span>
-            <span class="node" style="--d:-42s">QCC</span>
+        <div class="lv-belt">
+          <div class="lv-ws" style="--h:86"><i></i><span>OP-1</span></div>
+          <div class="lv-ws is-bn" style="--h:100"><i></i><span>OP-2</span><em>Bottleneck</em></div>
+          <div class="lv-ws" style="--h:62"><i></i><span>OP-3</span></div>
+          <div class="lv-ws" style="--h:78"><i></i><span>OP-4</span></div>
+          <div class="lv-ws" style="--h:70"><i></i><span>OP-5</span></div>
+          <div class="lv-flow">
+            <i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i>
           </div>
         </div>
-        <div class="portal-side">
-          <div class="ps-stat"><span class="ps-n" data-count="2">0</span><span class="ps-l">Certified Programs</span></div>
-          <div class="ps-stat"><span class="ps-n" data-count="8">0</span><span class="ps-l">Months of Training</span></div>
-          <div class="ps-stat"><span class="ps-n" data-count="40" data-suffix="+">0</span><span class="ps-l">Tools &amp; Methods</span></div>
-          <p class="ps-note">Hover the core — <em>everything orbits around one goal: zero waste.</em></p>
+
+        <div class="lv-foot">
+          <span><i class="d bn"></i> Bottleneck — 0.30 min</span>
+          <span><i class="d ok"></i> Pitch time — 0.218 min</span>
+          <span class="lv-hint" id="lvHint">Watch the line rebalance itself…</span>
         </div>
       </div>
 

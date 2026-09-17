@@ -137,6 +137,33 @@
     });
   });
 
+  /* ---- training: line-balancing visual ---- */
+  var lineViz = document.getElementById("lineViz");
+  var brVal = document.getElementById("brVal");
+  var lvHint = document.getElementById("lvHint");
+  if (lineViz) {
+    var lvObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        lvObserver.unobserve(e.target);
+        setTimeout(function () {
+          lineViz.classList.add("balanced");
+          if (lvHint) lvHint.textContent = "Balanced — no idle time, no waiting.";
+          if (brVal) {
+            var from = 73, to = 100, t0 = performance.now(), dur = 1250;
+            (function step(now) {
+              var p = Math.min((now - t0) / dur, 1);
+              var eased = 1 - Math.pow(1 - p, 3);
+              brVal.textContent = Math.round(from + (to - from) * eased) + "%";
+              if (p < 1) requestAnimationFrame(step);
+            })(t0);
+          }
+        }, 1500);
+      });
+    }, { threshold: 0.4 });
+    lvObserver.observe(lineViz);
+  }
+
   /* ---- training: certificate lightbox ---- */
   var lb = document.getElementById("lightbox");
   var lbImg = document.getElementById("lbImg");

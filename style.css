@@ -230,68 +230,37 @@ p{margin:0 0 1em}
 .section-lead{color:var(--muted);max-width:70ch;margin:-18px 0 34px;font-size:1rem}
 .section-lead strong{color:var(--text)}
 
-/* ---- learning portal: smooth offset-path orbit ---- */
-.portal-wrap{display:grid;grid-template-columns:auto 1fr;gap:56px;align-items:center;
-  margin:10px 0 66px;padding:28px;border:1px solid var(--line);border-radius:24px;
-  background:radial-gradient(560px 300px at 20% 45%,rgba(232,180,81,.05),transparent 62%),rgba(255,255,255,.015)}
-.portal{position:relative;width:380px;height:380px;flex:0 0 auto;margin:0 auto}
-
-/* slow rotating sweep — the "mystery" */
-.portal-halo{position:absolute;inset:24px;border-radius:50%;
-  background:conic-gradient(from 0deg,transparent 0%,rgba(232,180,81,.22) 12%,transparent 30%,rgba(78,205,196,.18) 55%,transparent 72%,rgba(139,157,255,.14) 88%,transparent 100%);
-  filter:blur(22px);animation:sweep 30s linear infinite;
-  mask:radial-gradient(circle,transparent 34%,#000 50%,#000 74%,transparent 88%)}
-@keyframes sweep{to{transform:rotate(360deg)}}
-
-/* faint guide rings */
-.ring-guide{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.05)}
-.rg1{inset:calc(50% - 95px)}.rg2{inset:calc(50% - 135px)}.rg3{inset:calc(50% - 176px)}
-
-/* twinkling dust */
-.portal-dust{position:absolute;inset:0;opacity:.7;
-  background-image:
-    radial-gradient(1.4px 1.4px at 18% 26%,rgba(255,255,255,.6),transparent),
-    radial-gradient(1.2px 1.2px at 78% 18%,rgba(232,180,81,.7),transparent),
-    radial-gradient(1.2px 1.2px at 88% 66%,rgba(255,255,255,.45),transparent),
-    radial-gradient(1.4px 1.4px at 30% 82%,rgba(78,205,196,.6),transparent),
-    radial-gradient(1px 1px at 58% 44%,rgba(255,255,255,.5),transparent),
-    radial-gradient(1px 1px at 12% 62%,rgba(255,255,255,.35),transparent);
-  animation:twinkle 5.5s ease-in-out infinite}
-@keyframes twinkle{0%,100%{opacity:.35}50%{opacity:.85}}
-
-.portal-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;
-  width:104px;height:104px;border-radius:50%;display:grid;place-items:center;text-align:center;
-  background:radial-gradient(circle at 34% 28%,#20242e,#0a0c11);border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 0 0 1px rgba(232,180,81,.22),0 0 46px -10px rgba(232,180,81,.5),inset 0 0 30px rgba(78,205,196,.12);
-  font-family:"Space Grotesk";font-weight:700;font-size:.84rem;letter-spacing:.08em;line-height:1.2;
-  animation:coreBreathe 6s ease-in-out infinite}
-.portal-core span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-@keyframes coreBreathe{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.045)}}
-
-/* orbiting skill chips — clean, no counter-rotation needed */
-.ring{position:absolute;inset:0}
-.node{position:absolute;left:0;top:0;white-space:nowrap;offset-rotate:0deg;
-  animation-name:orbit;animation-timing-function:linear;animation-iteration-count:infinite;
-  animation-delay:var(--d,0s)}
-.node span{display:inline-block;font-size:.7rem;padding:5px 11px;border-radius:999px;
-  background:rgba(11,13,18,.9);border:1px solid var(--line-2);color:var(--muted);
-  backdrop-filter:blur(4px);transition:.3s}
-.r1 .node{offset-path:circle(95px at 190px 190px);animation-duration:26s}
-.r2 .node{offset-path:circle(135px at 190px 190px);animation-duration:40s}
-.r3 .node{offset-path:circle(176px at 190px 190px);animation-duration:56s}
-@keyframes orbit{to{offset-distance:100%}}
-.portal:hover .r1 .node{animation-duration:14s}
-.portal:hover .r2 .node{animation-duration:22s}
-.portal:hover .r3 .node{animation-duration:32s}
-.portal:hover .portal-halo{animation-duration:12s}
-.portal:hover .node span{color:var(--text);border-color:rgba(232,180,81,.5);box-shadow:0 0 18px -4px rgba(232,180,81,.5)}
-
-.portal-side{display:grid;gap:14px}
-.ps-stat{display:flex;align-items:baseline;gap:12px;padding:12px 16px;border:1px solid var(--line);border-radius:13px;background:var(--panel)}
-.ps-n{font-family:"Space Grotesk";font-size:1.65rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;min-width:2.4em}
-.ps-l{color:var(--muted);font-size:.89rem}
-.ps-note{color:var(--muted);font-size:.87rem;margin:4px 0 0}
-.ps-note em{color:var(--amber-2);font-style:normal}
+/* ---- line-balancing visual (course concept) ---- */
+.line-viz{border:1px solid var(--line);border-radius:24px;padding:24px 24px 20px;margin:10px 0 62px;
+  background:radial-gradient(620px 320px at 12% 18%,rgba(232,180,81,.055),transparent 62%),rgba(255,255,255,.015)}
+.lv-top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.lv-tag{font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.lv-br{display:flex;align-items:baseline;gap:10px}
+.lv-br span{font-size:.8rem;color:var(--muted)}
+.lv-br b{font-family:"Space Grotesk";font-size:1.7rem;font-weight:700;min-width:3.4em;text-align:right;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lv-belt{display:flex;align-items:flex-end;gap:12px;height:230px;padding:0 2px;position:relative}
+.lv-ws{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;position:relative}
+.lv-ws i{display:block;width:100%;height:calc(var(--h) * 1%);border-radius:10px 10px 3px 3px;
+  background:linear-gradient(180deg,rgba(78,205,196,.92),rgba(43,127,122,.5));
+  transition:height 1.25s cubic-bezier(.2,.7,.2,1),background .7s,box-shadow .7s}
+.lv-ws.is-bn i{background:linear-gradient(180deg,#e8b451,#a97a1f);box-shadow:0 0 34px -8px rgba(232,180,81,.75)}
+.lv-ws span{margin-top:9px;font-size:.68rem;letter-spacing:.07em;color:var(--muted)}
+.lv-ws em{position:absolute;top:-6px;font-style:normal;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--amber-2);opacity:0;transform:translateY(4px);transition:.45s}
+.lv-ws.is-bn em{opacity:1;transform:none}
+.line-viz.balanced .lv-ws i{height:82%;background:linear-gradient(180deg,rgba(78,205,196,.92),rgba(43,127,122,.5));box-shadow:none}
+.line-viz.balanced .lv-ws em{opacity:0;transform:translateY(-4px)}
+.lv-flow{position:absolute;left:0;right:0;bottom:0;height:6px;pointer-events:none}
+.lv-flow i{position:absolute;bottom:0;left:-2%;width:6px;height:6px;border-radius:50%;background:var(--amber);
+  box-shadow:0 0 12px rgba(232,180,81,.8);opacity:0;animation:flow 5s linear infinite;animation-delay:calc(var(--i) * .83s)}
+@keyframes flow{0%{left:-2%;opacity:0}12%{opacity:.9}88%{opacity:.9}100%{left:102%;opacity:0}}
+.lv-foot{display:flex;gap:22px;flex-wrap:wrap;align-items:center;margin-top:20px;font-size:.81rem;color:var(--muted)}
+.lv-foot .d{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:7px}
+.lv-foot .d.bn{background:var(--amber);box-shadow:0 0 10px rgba(232,180,81,.7)}
+.lv-foot .d.ok{background:var(--teal)}
+.lv-hint{margin-left:auto;color:var(--amber-2);transition:.5s}
+.line-viz.balanced .lv-hint{color:var(--teal)}
 
 /* ---- program cards with certificate proof ---- */
 .prog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:26px;margin-bottom:20px}
@@ -373,13 +342,12 @@ p{margin:0 0 1em}
   .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
   .pub{flex-direction:column}
   .section{padding:76px 0}
-  .portal-wrap{grid-template-columns:1fr;gap:30px;padding:20px}
-  .portal{width:320px;height:320px}
-  .r1 .node{offset-path:circle(80px at 160px 160px)}
-  .r2 .node{offset-path:circle(114px at 160px 160px)}
-  .r3 .node{offset-path:circle(148px at 160px 160px)}
-  .rg1{inset:calc(50% - 80px)}.rg2{inset:calc(50% - 114px)}.rg3{inset:calc(50% - 148px)}
-  .node span{font-size:.62rem;padding:4px 8px}
+  .line-viz{padding:18px 16px 16px}
+  .lv-belt{height:170px;gap:8px}
+  .lv-ws span{font-size:.6rem}
+  .lv-ws em{font-size:.54rem}
+  .lv-br b{font-size:1.35rem;min-width:3em}
+  .lv-hint{display:none}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none !important;transition:none !important}
