@@ -324,19 +324,6 @@ p{margin:0 0 1em}
 .prog-detail li{margin-bottom:9px}
 .prog-detail strong{color:#fff}
 
-/* ---- curriculum tracks ---- */
-.tracks{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
-.track-card{border:1px solid var(--line);border-radius:18px;padding:22px;background:var(--panel);transition:.35s;position:relative;overflow:hidden}
-.track-card::before{content:"";position:absolute;inset:0;background:linear-gradient(140deg,rgba(232,180,81,.08),transparent 58%);opacity:0;transition:.35s}
-.track-card:hover{transform:translateY(-6px);border-color:rgba(78,205,196,.42)}
-.track-card:hover::before{opacity:1}
-.tk-head{display:flex;align-items:center;gap:10px;position:relative}
-.tk-ico{font-size:1.25rem}
-.tk-head h4{margin:0;font-size:1rem}
-.tk-sub{color:var(--muted);font-size:.79rem;margin:6px 0 14px;position:relative}
-.track-card ul{margin:0;padding-left:18px;color:#bcc3d2;font-size:.87rem;position:relative}
-.track-card li{margin-bottom:7px}
-
 /* ---- skills gained chips ---- */
 .gained{display:flex;flex-wrap:wrap;gap:9px;margin-top:34px}
 .g-chip{font-size:.81rem;padding:8px 14px;border-radius:999px;border:1px solid var(--line);color:#bcc3d2;
