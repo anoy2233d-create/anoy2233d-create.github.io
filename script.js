@@ -137,31 +137,38 @@
     });
   });
 
-  /* ---- training: line-balancing visual ---- */
-  var lineViz = document.getElementById("lineViz");
-  var brVal = document.getElementById("brVal");
-  var lvHint = document.getElementById("lvHint");
-  if (lineViz) {
-    var lvObserver = new IntersectionObserver(function (entries) {
+  /* ---- training: improvement-cycle visual (DMAIC) ---- */
+  var cycleViz = document.getElementById("cycleViz");
+  if (cycleViz) {
+    var cvItems = Array.prototype.slice.call(cycleViz.querySelectorAll(".cv-item"));
+    var cvSegs = Array.prototype.slice.call(cycleViz.querySelectorAll(".cv-seg"));
+    var cvStage = document.getElementById("cvStage");
+    var cvTool = document.getElementById("cvTool");
+    var cvIdx = 0, cvTimer = null;
+
+    function cvShow(i) {
+      cvIdx = (i + cvItems.length) % cvItems.length;
+      cvItems.forEach(function (el, k) { el.classList.toggle("on", k === cvIdx); });
+      cvSegs.forEach(function (el, k) { el.classList.toggle("on", k === cvIdx); });
+      var it = cvItems[cvIdx];
+      if (cvStage) cvStage.textContent = it.getAttribute("data-stage");
+      if (cvTool) cvTool.textContent = it.getAttribute("data-tool");
+    }
+    cvItems.forEach(function (el, k) {
+      el.addEventListener("click", function () { cvShow(k); });
+    });
+    var cvObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        lvObserver.unobserve(e.target);
-        setTimeout(function () {
-          lineViz.classList.add("balanced");
-          if (lvHint) lvHint.textContent = "Balanced — no idle time, no waiting.";
-          if (brVal) {
-            var from = 73, to = 100, t0 = performance.now(), dur = 1250;
-            (function step(now) {
-              var p = Math.min((now - t0) / dur, 1);
-              var eased = 1 - Math.pow(1 - p, 3);
-              brVal.textContent = Math.round(from + (to - from) * eased) + "%";
-              if (p < 1) requestAnimationFrame(step);
-            })(t0);
-          }
-        }, 1500);
+        if (e.isIntersecting) {
+          cvShow(0);
+          if (!cvTimer) cvTimer = setInterval(function () { cvShow(cvIdx + 1); }, 2400);
+        } else if (cvTimer) {
+          clearInterval(cvTimer);
+          cvTimer = null;
+        }
       });
-    }, { threshold: 0.4 });
-    lvObserver.observe(lineViz);
+    }, { threshold: 0.35 });
+    cvObserver.observe(cycleViz);
   }
 
   /* ---- training: certificate lightbox ---- */
