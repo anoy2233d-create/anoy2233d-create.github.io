@@ -248,10 +248,6 @@
           <span class="t-num" data-t-count="8">8</span>
           <span class="t-lbl">Training Modules</span>
         </div>
-        <div class="t-stat">
-          <span class="t-num" data-t-count="5">5</span>
-          <span class="t-lbl">DMAIC Sessions</span>
-        </div>
       </div>
 
       <!-- B) waste elimination -->
@@ -587,7 +583,24 @@
 
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || section).querySelectorAll(sel)); };
   var easeOutCubic = function (t) { return 1 - Math.pow(1 - t, 3); };
-  var at = function (ms, fn) { setTimeout(fn, ms); };
+  var stepTimers = [], loopTimer = null;
+  var at = function (ms, fn) { stepTimers.push(setTimeout(fn, ms)); };
+
+  function clearTimers() {
+    stepTimers.forEach(clearTimeout);
+    stepTimers = [];
+    if (loopTimer) { clearTimeout(loopTimer); loopTimer = null; }
+  }
+
+  /* put every element back to its pre-animation state so the cycle can replay */
+  function reset() {
+    words.forEach(function (w) { w.classList.remove("in"); });
+    if (sweep) sweep.classList.remove("sweep");
+    chips.forEach(function (c) { c.classList.remove("in", "removed"); });
+    if (wasteDone) wasteDone.classList.remove("in");
+    stats.forEach(function (el) { el.textContent = "0"; });
+    if (wasteNum) wasteNum.textContent = "8";
+  }
 
   /* count 0 -> target with requestAnimationFrame (900ms, easeOutCubic) */
   function countUp(el, to, ms) {
@@ -633,7 +646,9 @@
   var wasteDone = section.querySelector("#tWasteDone");
   var sweep = section.querySelector(".section-title .grad");
 
-  function run() {
+  function cycle() {
+    clearTimers();
+    reset();
     if (wasteNum) wasteNum.textContent = "8";                 // counter starts at 8
 
     // t=0 — headline words: fade + rise, 60ms stagger
@@ -675,13 +690,19 @@
       wasteDone.classList.add("in");
       at(520, function () { wasteDone.style.willChange = ""; });
     });
+
+    // hold the finished state briefly, then replay the whole sequence
+    loopTimer = setTimeout(cycle, 4600);
   }
 
-  /* STEP 2 — single trigger, threshold .35, fires ONCE */
-  var once = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { if (e.isIntersecting) { once.unobserve(e.target); run(); } });
+  /* STEP 2 — repeat while the section is in view (threshold .35) */
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { if (!loopTimer) cycle(); }
+      else { clearTimers(); reset(); }        // stop + rewind when scrolled away
+    });
   }, { threshold: 0.35 });
-  once.observe(section);
+  io.observe(section);
 
   /* STEP 3 — certificate card 3D tilt (max 6deg, pointer devices only) */
   if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
