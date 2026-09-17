@@ -233,22 +233,34 @@
 
       <!-- improvement-cycle visual (DMAIC — the thread through every course) -->
       <div class="cycle-viz reveal" id="cycleViz">
-        <div class="cv-ringwrap">
-          <div class="cv-halo"></div>
-          <svg viewBox="0 0 320 320" class="cv-svg" aria-hidden="true">
-            <circle class="cv-track" cx="160" cy="160" r="126"></circle>
-            <circle class="cv-seg seg0" cx="160" cy="160" r="126"></circle>
-            <circle class="cv-seg seg1" cx="160" cy="160" r="126"></circle>
-            <circle class="cv-seg seg2" cx="160" cy="160" r="126"></circle>
-            <circle class="cv-seg seg3" cx="160" cy="160" r="126"></circle>
-            <circle class="cv-seg seg4" cx="160" cy="160" r="126"></circle>
-          </svg>
-          <div class="cv-comet"></div>
-          <div class="cv-core">
-            <div class="cv-k">Stage</div>
-            <div class="cv-v" id="cvStage">Define</div>
-            <div class="cv-t" id="cvTool">VOC · CTQ · AHP · SIPOC</div>
+        <div class="stats-viz">
+          <div class="sv-grid">
+            <div class="sv-ring" style="--c:#e8b451">
+              <svg viewBox="0 0 120 120" aria-hidden="true">
+                <circle class="sv-track" cx="60" cy="60" r="52"></circle>
+                <circle class="sv-fill" cx="60" cy="60" r="52"></circle>
+              </svg>
+              <div class="sv-mid"><b data-count="2">0</b></div>
+              <span class="sv-lbl">Certified<br>Programs</span>
+            </div>
+            <div class="sv-ring" style="--c:#4ecdc4">
+              <svg viewBox="0 0 120 120" aria-hidden="true">
+                <circle class="sv-track" cx="60" cy="60" r="52"></circle>
+                <circle class="sv-fill" cx="60" cy="60" r="52"></circle>
+              </svg>
+              <div class="sv-mid"><b data-count="8">0</b></div>
+              <span class="sv-lbl">Months of<br>Training</span>
+            </div>
+            <div class="sv-ring" style="--c:#8b9dff">
+              <svg viewBox="0 0 120 120" aria-hidden="true">
+                <circle class="sv-track" cx="60" cy="60" r="52"></circle>
+                <circle class="sv-fill" cx="60" cy="60" r="52"></circle>
+              </svg>
+              <div class="sv-mid"><b data-count="40" data-suffix="+">0</b></div>
+              <span class="sv-lbl">Tools &amp;<br>Methods</span>
+            </div>
           </div>
+          <div class="sv-caption">Completed · 2025 – 2026</div>
         </div>
 
         <div class="cv-side">

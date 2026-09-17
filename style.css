@@ -235,32 +235,20 @@ p{margin:0 0 1em}
   border:1px solid var(--line);border-radius:26px;padding:30px;margin:10px 0 62px;
   background:radial-gradient(640px 340px at 16% 24%,rgba(232,180,81,.05),transparent 62%),
              radial-gradient(520px 300px at 88% 80%,rgba(78,205,196,.05),transparent 62%),rgba(255,255,255,.015)}
-.cv-ringwrap{position:relative;width:340px;height:340px;flex:0 0 auto;margin:0 auto}
-.cv-halo{position:absolute;inset:34px;border-radius:50%;filter:blur(26px);opacity:.5;
-  background:conic-gradient(from 0deg,rgba(232,180,81,.32),rgba(78,205,196,.3) 25%,rgba(139,157,255,.28) 50%,rgba(242,133,107,.26) 75%,rgba(183,148,246,.3));
-  animation:cvSweep 26s linear infinite}
-@keyframes cvSweep{to{transform:rotate(360deg)}}
-.cv-svg{position:absolute;inset:10px;width:calc(100% - 20px);height:calc(100% - 20px)}
-.cv-track{fill:none;stroke:rgba(255,255,255,.055);stroke-width:11}
-.cv-seg{fill:none;stroke-width:11;stroke-linecap:round;stroke-dasharray:150 641.681;
-  opacity:.22;transition:opacity .5s,stroke-width .5s,filter .5s}
-.seg0{stroke:#e8b451;stroke-dashoffset:0}
-.seg1{stroke:#4ecdc4;stroke-dashoffset:-158.336}
-.seg2{stroke:#8b9dff;stroke-dashoffset:-316.672}
-.seg3{stroke:#f2856b;stroke-dashoffset:-475.009}
-.seg4{stroke:#b794f6;stroke-dashoffset:-633.345}
-.cv-seg.on{opacity:1;stroke-width:13;filter:drop-shadow(0 0 7px rgba(255,255,255,.4))}
-.cv-comet{position:absolute;left:0;top:0;width:15px;height:15px;border-radius:50%;background:#fff;
-  box-shadow:0 0 22px 5px rgba(255,255,255,.5),0 0 44px 12px rgba(232,180,81,.3);
-  offset-path:circle(126px at 170px 170px);offset-rotate:0deg;animation:cvOrbit 12s linear infinite}
-@keyframes cvOrbit{to{offset-distance:100%}}
-.cv-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:174px;height:174px;border-radius:50%;
-  display:grid;place-content:center;text-align:center;gap:3px;padding:16px;
-  background:radial-gradient(circle at 36% 30%,#1a1f2b,#0a0c11);border:1px solid rgba(255,255,255,.12);
-  box-shadow:inset 0 0 34px rgba(232,180,81,.08),0 20px 50px -24px #000}
-.cv-k{font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
-.cv-v{font-family:"Space Grotesk";font-size:1.4rem;font-weight:700;color:#fff;transition:.35s}
-.cv-t{font-size:.65rem;color:var(--amber-2);letter-spacing:.03em;line-height:1.4}
+.stats-viz{display:grid;justify-items:center;gap:16px;flex:0 0 auto;margin:0 auto}
+.sv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.sv-ring{position:relative;width:112px;display:grid;justify-items:center;gap:9px}
+.sv-ring svg{width:112px;height:112px;transform:rotate(-90deg)}
+.sv-track{fill:none;stroke:rgba(255,255,255,.07);stroke-width:9}
+.sv-fill{fill:none;stroke:var(--c,#e8b451);stroke-width:9;stroke-linecap:round;
+  stroke-dasharray:326.73;stroke-dashoffset:326.73;
+  transition:stroke-dashoffset 1.7s cubic-bezier(.2,.7,.2,1);
+  filter:drop-shadow(0 0 5px rgba(255,255,255,.22))}
+.stats-viz.in .sv-fill{stroke-dashoffset:0}
+.sv-mid{position:absolute;top:0;left:0;width:112px;height:112px;display:grid;place-items:center;
+  font-family:"Space Grotesk";font-size:1.45rem;font-weight:700;color:#fff}
+.sv-lbl{font-size:.71rem;color:var(--muted);text-align:center;line-height:1.35}
+.sv-caption{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .cv-tag{font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
 .cv-title{font-size:clamp(1.22rem,2.4vw,1.55rem);margin:0 0 12px;letter-spacing:-.4px}
 .cv-lead{color:var(--muted);font-size:.94rem;margin-bottom:22px;max-width:52ch}
@@ -357,11 +345,11 @@ p{margin:0 0 1em}
   .pub{flex-direction:column}
   .section{padding:76px 0}
   .cycle-viz{grid-template-columns:1fr;gap:28px;padding:20px}
-  .cv-ringwrap{width:290px;height:290px}
-  .cv-comet{offset-path:circle(107px at 145px 145px)}
-  .cv-core{width:150px;height:150px}
-  .cv-v{font-size:1.2rem}
-  .cv-t{font-size:.6rem}
+  .sv-grid{gap:10px}
+  .sv-ring,.sv-ring svg,.sv-mid{width:94px}
+  .sv-ring svg,.sv-mid{height:94px}
+  .sv-mid{font-size:1.2rem}
+  .sv-lbl{font-size:.66rem}
   .cv-item.on{transform:translateX(3px)}
 }
 @media(prefers-reduced-motion:reduce){

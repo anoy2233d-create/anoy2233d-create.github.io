@@ -137,29 +137,25 @@
     });
   });
 
-  /* ---- training: improvement-cycle visual (DMAIC) ---- */
+  /* ---- training: stat rings + DMAIC stage list ---- */
   var cycleViz = document.getElementById("cycleViz");
   if (cycleViz) {
+    var statsViz = cycleViz.querySelector(".stats-viz");
     var cvItems = Array.prototype.slice.call(cycleViz.querySelectorAll(".cv-item"));
-    var cvSegs = Array.prototype.slice.call(cycleViz.querySelectorAll(".cv-seg"));
-    var cvStage = document.getElementById("cvStage");
-    var cvTool = document.getElementById("cvTool");
     var cvIdx = 0, cvTimer = null;
 
     function cvShow(i) {
       cvIdx = (i + cvItems.length) % cvItems.length;
       cvItems.forEach(function (el, k) { el.classList.toggle("on", k === cvIdx); });
-      cvSegs.forEach(function (el, k) { el.classList.toggle("on", k === cvIdx); });
-      var it = cvItems[cvIdx];
-      if (cvStage) cvStage.textContent = it.getAttribute("data-stage");
-      if (cvTool) cvTool.textContent = it.getAttribute("data-tool");
     }
     cvItems.forEach(function (el, k) {
       el.addEventListener("click", function () { cvShow(k); });
     });
+
     var cvObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) {
+          if (statsViz) statsViz.classList.add("in");
           cvShow(0);
           if (!cvTimer) cvTimer = setInterval(function () { cvShow(cvIdx + 1); }, 2400);
         } else if (cvTimer) {
@@ -167,7 +163,7 @@
           cvTimer = null;
         }
       });
-    }, { threshold: 0.35 });
+    }, { threshold: 0.3 });
     cvObserver.observe(cycleViz);
   }
 
