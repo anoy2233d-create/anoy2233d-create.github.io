@@ -111,39 +111,59 @@
   <!-- ABOUT -->
   <section id="about" class="section">
     <div class="container">
-      <p class="eyebrow">01 — About</p>
-      <h2 class="section-title">Engineering <span class="grad">efficiency</span> on the shop floor</h2>
+      <p class="eyebrow about-eyebrow"><span class="eb-txt">01 — About</span><i class="eb-rule" aria-hidden="true"></i></p>
+      <h2 class="section-title">I find the <span class="grad">minutes</span> a factory gives away.</h2>
+
       <div class="about-grid">
-        <div class="about-text reveal">
+        <div class="about-text">
+          <span class="about-vline" aria-hidden="true"></span>
+
           <p>
-            I'm an Industrial &amp; Production Engineering graduate from
-            <strong>Rajshahi University of Engineering &amp; Technology (RUET)</strong>, working at the
-            intersection of <strong>operations, quality and data</strong>.
+            I'm an Industrial &amp; Production Engineering graduate from <strong>RUET</strong>, working where
+            operations, quality and data meet. Most of what I do comes down to one question: where is this
+            process losing time, and what will it take to get it back?
           </p>
+
           <p>
-            Today, as <strong>Officer, Operation Excellence</strong> at <strong>Akij Light Engineering Ltd.</strong>,
-            I run time studies to set <strong>Standard Minute Values</strong>, balance lines, coordinate raw-material
-            flow with Supply Chain, and drive continuous-improvement projects on the floor.
+            As <strong>Officer, Operation Excellence</strong> at <strong>Akij Light Engineering Ltd.</strong>,
+            I run time studies to set <term data-def="Standard Minute Value — the time a qualified operator needs to complete one unit at standard pace">SMVs</term>,
+            rebalance lines so no station becomes the bottleneck, coordinate raw-material flow with Supply Chain,
+            and run continuous-improvement projects on the floor.
           </p>
+
           <p>
-            My toolkit blends classical industrial engineering — <strong>Value Stream Mapping, Time &amp; Motion Study,
-            Root Cause Analysis, Lean, Six Sigma, TQM and QC tools</strong> — with modern analytics
-            (<strong>Excel, Power BI, Python and SQL</strong>) so decisions are evidence-based, not guesses.
+            My toolkit blends classical industrial engineering — <term data-def="Value Stream Mapping — mapping every step of a process to separate value-added work from waste">VSM</term>,
+            time &amp; motion study, <term data-def="Pre-Determined Motion Time Systems — building standard times from motion-level data rather than stopwatch averages">PMTS</term>,
+            root cause analysis, Lean, Six Sigma and <term data-def="Define, Measure, Analyze, Improve, Control — the Six Sigma problem-solving cycle">DMAIC</term> —
+            with Excel, Power BI, Python and SQL, so a recommendation arrives with the numbers already attached.
           </p>
-          <p>
-            I've also published research on e-commerce logistics and actively lead volunteer teams —
-            I like solving problems and building people at the same time.
-          </p>
+
+          <p class="about-aside">Alongside that: published research on e-commerce logistics, and a few volunteer teams I've had the privilege of leading.</p>
         </div>
-        <div class="about-facts reveal">
+
+        <div class="about-facts">
           <div class="fact"><span class="fact-k">Role</span><span class="fact-v">Officer, OPEX</span></div>
           <div class="fact"><span class="fact-k">Company</span><span class="fact-v">Akij Light Engineering Ltd.</span></div>
           <div class="fact"><span class="fact-k">Location</span><span class="fact-v">Dhaka, Bangladesh</span></div>
           <div class="fact"><span class="fact-k">Degree</span><span class="fact-v">B.Sc. IPE, RUET</span></div>
-          <div class="fact"><span class="fact-k">Focus</span><span class="fact-v">Lean · Six Sigma · Data</span></div>
-          <div class="fact"><span class="fact-k">Email</span><span class="fact-v"><a href="mailto:anoy2233d@gmail.com">anoy2233d@gmail.com</a></span></div>
+          <div class="fact">
+            <span class="fact-k">Interested Field</span>
+            <span class="fact-v fact-pills">
+              <span class="fpill">Production</span>
+              <span class="fpill">Supply Chain</span>
+              <span class="fpill">Quality</span>
+            </span>
+          </div>
+          <div class="fact">
+            <span class="fact-k">Email</span>
+            <button class="fact-v copy-mail" type="button" data-mail="anoy2233d@gmail.com" aria-label="Copy email address anoy2233d@gmail.com">
+              <span class="copy-txt">anoy2233d@gmail.com</span>
+            </button>
+          </div>
         </div>
       </div>
+
+      <p class="sr-only" aria-live="polite" id="copyStatus"></p>
     </div>
   </section>
 
@@ -985,6 +1005,183 @@
         });
       });
     }, { passive: true });
+  }
+})();
+</script>
+
+<!-- ============================================================
+     ABOUT (#about) — word reveal, gradient sweep, glossary
+     tooltips, click-to-copy. Vanilla JS only.
+     ============================================================ -->
+<script>
+(function () {
+  "use strict";
+  var section = document.getElementById("about");
+  if (!section) return;
+
+  var $$ = function (sel, root) { return Array.prototype.slice.call((root || section).querySelectorAll(sel)); };
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* TASK 3 — give every <term> a tooltip element + ARIA wiring */
+  $$("term").forEach(function (term, i) {
+    var def = term.getAttribute("data-def");
+    if (!def) return;
+    var tip = document.createElement("span");
+    tip.className = "term-tip";
+    tip.id = "about-term-" + i;
+    tip.setAttribute("role", "tooltip");
+    tip.textContent = def;
+    term.appendChild(tip);
+    term.setAttribute("tabindex", "0");
+    term.setAttribute("role", "button");
+    term.setAttribute("aria-describedby", tip.id);
+    term.setAttribute("aria-expanded", "false");
+  });
+
+  /* TASK 3 — flip above/below + clamp horizontally inside the viewport */
+  function place(term) {
+    var tip = term.querySelector(".term-tip");
+    if (!tip) return;
+    tip.style.setProperty("--tip-x", "0px");
+    term.classList.remove("is-below");
+    var tr = term.getBoundingClientRect();
+    var tp = tip.getBoundingClientRect();
+    if (tr.top - tp.height - 14 < 8) term.classList.add("is-below");
+    tp = tip.getBoundingClientRect();
+    var center = tr.left + tr.width / 2;
+    var left = center - tp.width / 2;
+    var vw = document.documentElement.clientWidth;
+    var dx = 0;
+    if (left < 8) dx = 8 - left;
+    else if (left + tp.width > vw - 8) dx = (vw - 8) - (left + tp.width);
+    tip.style.setProperty("--tip-x", dx + "px");
+  }
+  function openTerm(term) {
+    place(term);
+    term.classList.add("is-open");
+    term.setAttribute("aria-expanded", "true");
+  }
+  function closeTerm(term) {
+    term.classList.remove("is-open");
+    term.setAttribute("aria-expanded", "false");
+  }
+
+  var touch = window.matchMedia("(hover: none)").matches;
+  $$("term").forEach(function (term) {
+    if (touch) {
+      /* TASK 3 — touch: tap toggles, tap elsewhere closes */
+      term.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var wasOpen = term.classList.contains("is-open");
+        $$("term.is-open").forEach(closeTerm);
+        if (!wasOpen) openTerm(term);
+      });
+    } else {
+      term.addEventListener("mouseenter", function () { openTerm(term); });
+      term.addEventListener("mouseleave", function () { closeTerm(term); });
+      term.addEventListener("focus", function () { openTerm(term); });
+      term.addEventListener("blur", function () { closeTerm(term); });
+    }
+  });
+  if (touch) document.addEventListener("click", function () { $$("term.is-open").forEach(closeTerm); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    $$("term.is-open").forEach(function (t) { closeTerm(t); t.blur(); });
+  });
+
+  /* TASK 4 — click-to-copy email (with a select-the-text fallback) */
+  var copyBtn = section.querySelector(".copy-mail");
+  var status = document.getElementById("copyStatus");
+  if (copyBtn) {
+    var mail = copyBtn.getAttribute("data-mail");
+    var txt = copyBtn.querySelector(".copy-txt");
+    var original = txt ? txt.textContent : mail;
+    var timer = null;
+    var done = function (ok) {
+      if (txt) txt.textContent = ok ? "Copied ✓" : "Select & copy";
+      copyBtn.classList.add("is-copied");
+      if (status) status.textContent = ok ? "Email address copied to clipboard" : "Copy unavailable — address selected";
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        if (txt) txt.textContent = original;
+        copyBtn.classList.remove("is-copied");
+      }, 1600);
+    };
+    var fallback = function () {
+      try {
+        var r = document.createRange();
+        r.selectNodeContents(copyBtn);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(r);
+      } catch (err) { /* ignore */ }
+      done(false);
+    };
+    copyBtn.addEventListener("click", function () {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(mail).then(function () { done(true); }, fallback);
+      } else {
+        fallback();
+      }
+    });
+  }
+
+  /* TASK 5 — wrap headline words at load (gradient phrase stays one unit) */
+  var title = section.querySelector(".section-title");
+  if (title) {
+    (function wrapWords(root) {
+      Array.prototype.slice.call(root.childNodes).forEach(function (node) {
+        if (node.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          node.textContent.split(/(\s+)/).forEach(function (part) {
+            if (!part) return;
+            if (/^\s+$/.test(part)) frag.appendChild(document.createTextNode(part));
+            else {
+              var s = document.createElement("span");
+              s.className = "word";
+              s.textContent = part;
+              frag.appendChild(s);
+            }
+          });
+          root.replaceChild(frag, node);
+        } else if (node.nodeType === 1 && node.tagName !== "BR") {
+          if (node.classList.contains("grad")) node.classList.add("word");
+          else wrapWords(node);
+        }
+      });
+    })(title);
+  }
+
+  /* TASK 5 — single timeline, threshold .25, fires once */
+  var words = $$(".word", title || section);
+  var paras = $$(".about-text > p");
+  var facts = $$(".about-facts .fact");
+  var grad = section.querySelector(".section-title .grad");
+  var at = function (ms, fn) { setTimeout(fn, ms); };
+
+  function run() {
+    section.classList.add("ab-in");                                   // t=0 eyebrow + rule + vline
+    words.forEach(function (w, i) {                                   // t=150 word stagger
+      at(150 + i * 55, function () { w.classList.add("in"); });
+    });
+    at(650, function () { if (grad) grad.classList.add("sweep"); });   // t=650 sweep
+    paras.forEach(function (p, i) {                                   // t=700 paragraphs
+      at(700 + i * 120, function () { p.classList.add("in"); });
+    });
+    facts.forEach(function (f, i) {                                   // t=900 info rows
+      at(900 + i * 70, function () { f.classList.add("in"); });
+    });
+  }
+
+  if (!reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        run();
+      });
+    }, { threshold: 0.25 });
+    io.observe(section);
   }
 })();
 </script>
