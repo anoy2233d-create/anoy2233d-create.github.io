@@ -91,14 +91,15 @@
   function animateCount(el) {
     var target = parseFloat(el.getAttribute("data-count"));
     var dec = parseInt(el.getAttribute("data-dec") || "0", 10);
+    var suffix = el.getAttribute("data-suffix") || "";
     var start = performance.now();
     var dur = 1300;
     (function step(now) {
       var p = Math.min((now - start) / dur, 1);
       var eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = (target * eased).toFixed(dec);
+      el.textContent = (target * eased).toFixed(dec) + suffix;
       if (p < 1) requestAnimationFrame(step);
-      else el.textContent = target.toFixed(dec);
+      else el.textContent = target.toFixed(dec) + suffix;
     })(start);
   }
   var countObserver = new IntersectionObserver(function (entries) {
@@ -127,4 +128,43 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
+
+  /* ---- training: expandable program cards ---- */
+  document.querySelectorAll(".prog-toggle").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var card = btn.closest(".prog");
+      if (card) card.classList.toggle("open");
+    });
+  });
+
+  /* ---- training: certificate lightbox ---- */
+  var lb = document.getElementById("lightbox");
+  var lbImg = document.getElementById("lbImg");
+  var lbCap = document.getElementById("lbCap");
+  var lbClose = document.getElementById("lbClose");
+
+  function openLightbox(src, title) {
+    if (!lb) return;
+    lbImg.src = src;
+    lbImg.alt = title || "Certificate";
+    lbCap.textContent = title || "";
+    lb.classList.add("open");
+    lb.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+  function closeLightbox() {
+    if (!lb) return;
+    lb.classList.remove("open");
+    lb.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  document.querySelectorAll(".cert-frame").forEach(function (frame) {
+    frame.addEventListener("click", function () {
+      openLightbox(frame.getAttribute("data-cert"), frame.getAttribute("data-title"));
+    });
+  });
+  if (lbClose) lbClose.addEventListener("click", closeLightbox);
+  if (lb) lb.addEventListener("click", function (e) { if (e.target === lb) closeLightbox(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLightbox(); });
 })();
