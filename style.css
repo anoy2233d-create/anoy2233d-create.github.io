@@ -318,11 +318,17 @@ p{margin:0 0 1em}
 .prog-toggle:hover{border-color:rgba(232,180,81,.5);background:rgba(232,180,81,.05)}
 .prog-toggle i{font-style:normal;transition:.3s;color:var(--amber-2)}
 .prog.open .prog-toggle i{transform:rotate(180deg)}
-.prog-detail{max-height:0;overflow:hidden;transition:max-height .55s cubic-bezier(.2,.7,.2,1)}
-.prog.open .prog-detail{max-height:660px}
-.prog-detail ul{margin:14px 0 0;padding-left:18px;color:#bcc3d2;font-size:.89rem}
-.prog-detail li{margin-bottom:9px}
-.prog-detail strong{color:#fff}
+.prog-detail{max-height:0;overflow:hidden;transition:max-height .6s cubic-bezier(.2,.7,.2,1)}
+.prog.open .prog-detail{max-height:2000px}
+.learn{display:grid;gap:14px;margin-top:16px}
+.learn-block{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:rgba(255,255,255,.02)}
+.learn-block h5{margin:0 0 6px;font-size:.93rem;font-family:"Space Grotesk";color:var(--amber-2);letter-spacing:0}
+.learn-block > p{margin:0 0 10px;color:var(--muted);font-size:.85rem}
+.learn-block ul{margin:0;padding-left:18px;color:#bcc3d2;font-size:.87rem}
+.learn-block li{margin-bottom:8px}
+.learn-block li:last-child{margin-bottom:0}
+.learn-block b,.learn-block strong{color:#fff;font-weight:600}
+.learn-block i{color:var(--muted);font-style:italic}
 
 /* ---- certificate lightbox ---- */
 .lightbox{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:28px;
