@@ -582,7 +582,6 @@
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || section).querySelectorAll(sel)); };
-  var easeOutCubic = function (t) { return 1 - Math.pow(1 - t, 3); };
   var stepTimers = [], loopTimer = null;
   var at = function (ms, fn) { stepTimers.push(setTimeout(fn, ms)); };
 
@@ -598,20 +597,7 @@
     if (sweep) sweep.classList.remove("sweep");
     chips.forEach(function (c) { c.classList.remove("in", "removed"); });
     if (wasteDone) wasteDone.classList.remove("in");
-    stats.forEach(function (el) { el.textContent = "0"; });
     if (wasteNum) wasteNum.textContent = "8";
-  }
-
-  /* count 0 -> target with requestAnimationFrame (900ms, easeOutCubic) */
-  function countUp(el, to, ms) {
-    var t0 = performance.now();
-    el.style.willChange = "contents";
-    (function step(now) {
-      var p = Math.min((now - t0) / ms, 1);
-      el.textContent = Math.round(to * easeOutCubic(p));
-      if (p < 1) requestAnimationFrame(step);
-      else { el.textContent = to; el.style.willChange = ""; }
-    })(t0);
   }
 
   /* STEP 1 — wrap every headline word in <span class="word"> at load (not by hand).
@@ -640,7 +626,6 @@
   })(title);
 
   var words = $$(".word", title);
-  var stats = $$(".t-num");
   var chips = $$(".t-chip");
   var wasteNum = section.querySelector("#tWasteNum");
   var wasteDone = section.querySelector("#tWasteDone");
@@ -662,9 +647,6 @@
 
     // t=700 — one-time gradient sweep across "see waste."
     at(700, function () { if (sweep) sweep.classList.add("sweep"); });
-
-    // t=900 — stat numbers count up
-    at(900, function () { stats.forEach(function (el) { countUp(el, +el.getAttribute("data-t-count"), 900); }); });
 
     // t=1100 — chips fade + rise, 70ms stagger
     chips.forEach(function (c, i) {
