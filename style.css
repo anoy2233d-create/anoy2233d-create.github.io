@@ -329,6 +329,9 @@ p{margin:0 0 1em}
 .learn-block li .mod{display:inline-block;font-size:.63rem;letter-spacing:.08em;text-transform:uppercase;
   padding:2px 7px;border-radius:999px;background:rgba(78,205,196,.13);border:1px solid rgba(78,205,196,.38);
   color:var(--teal);margin-right:7px;vertical-align:1px;font-family:Inter,sans-serif;white-space:nowrap}
+.learn-block .sess{margin-top:16px}
+.learn-block .sess h6{margin:0 0 6px;font-size:.86rem;font-family:"Space Grotesk";color:var(--teal);letter-spacing:0}
+.learn-block .sess ul{margin:0}
 .learn-block > p{margin:0 0 10px;color:var(--muted);font-size:.85rem}
 .learn-block ul{margin:0;padding-left:18px;color:#bcc3d2;font-size:.87rem}
 .learn-block li{margin-bottom:8px}
