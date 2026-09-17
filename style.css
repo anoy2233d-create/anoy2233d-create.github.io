@@ -230,39 +230,19 @@ p{margin:0 0 1em}
 .section-lead{color:var(--muted);max-width:70ch;margin:-18px 0 34px;font-size:1rem}
 .section-lead strong{color:var(--text)}
 
-/* ---- improvement-cycle visual (DMAIC — unifies every course) ---- */
-.cycle-viz{display:grid;grid-template-columns:auto 1fr;gap:52px;align-items:center;
-  border:1px solid var(--line);border-radius:26px;padding:30px;margin:10px 0 62px;
-  background:radial-gradient(640px 340px at 16% 24%,rgba(232,180,81,.05),transparent 62%),
-             radial-gradient(520px 300px at 88% 80%,rgba(78,205,196,.05),transparent 62%),rgba(255,255,255,.015)}
-.stats-viz{display:grid;justify-items:center;gap:16px;flex:0 0 auto;margin:0 auto}
-.sv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.sv-ring{position:relative;width:112px;display:grid;justify-items:center;gap:9px}
-.sv-ring svg{width:112px;height:112px;transform:rotate(-90deg)}
-.sv-track{fill:none;stroke:rgba(255,255,255,.07);stroke-width:9}
-.sv-fill{fill:none;stroke:var(--c,#e8b451);stroke-width:9;stroke-linecap:round;
-  stroke-dasharray:326.73;stroke-dashoffset:326.73;
-  transition:stroke-dashoffset 1.7s cubic-bezier(.2,.7,.2,1);
-  filter:drop-shadow(0 0 5px rgba(255,255,255,.22))}
-.stats-viz.in .sv-fill{stroke-dashoffset:0}
-.sv-mid{position:absolute;top:0;left:0;width:112px;height:112px;display:grid;place-items:center;
-  font-family:"Space Grotesk";font-size:1.45rem;font-weight:700;color:#fff}
-.sv-lbl{font-size:.71rem;color:var(--muted);text-align:center;line-height:1.35}
-.sv-caption{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-.cv-tag{font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.cv-title{font-size:clamp(1.22rem,2.4vw,1.55rem);margin:0 0 12px;letter-spacing:-.4px}
-.cv-lead{color:var(--muted);font-size:.94rem;margin-bottom:22px;max-width:52ch}
-.cv-lead strong{color:var(--text)}
-.cv-list{display:grid;gap:8px}
-.cv-item{display:grid;gap:2px;text-align:left;width:100%;cursor:pointer;
-  border:1px solid var(--line);border-left:3px solid transparent;border-radius:12px;
-  padding:11px 14px;background:rgba(255,255,255,.02);color:inherit;font:inherit;transition:.3s}
-.cv-item b{font-size:.89rem;font-family:"Space Grotesk";color:var(--text)}
-.cv-item span{font-size:.79rem;color:var(--muted)}
-.cv-item:hover{border-color:var(--line-2);transform:translateX(3px)}
-.cv-item.on{border-color:rgba(232,180,81,.45);border-left-color:var(--amber);background:rgba(232,180,81,.07);transform:translateX(6px)}
-.cv-item.on b{color:var(--amber-2)}
-.cv-item.on span{color:#c3cbe0}
+/* ---- training summary strip ---- */
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:10px 0 58px}
+.ss-item{border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:var(--panel);
+  position:relative;overflow:hidden;transition:.3s}
+.ss-item:hover{border-color:rgba(232,180,81,.4);transform:translateY(-3px)}
+.ss-n{display:block;font-family:"Space Grotesk";font-size:2rem;font-weight:700;line-height:1.1;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ss-l{display:block;font-size:.81rem;color:var(--muted);margin-top:5px}
+.ss-bar{display:block;height:3px;border-radius:999px;background:rgba(255,255,255,.07);
+  margin-top:13px;position:relative;overflow:hidden}
+.ss-bar::after{content:"";position:absolute;left:0;top:0;bottom:0;width:0;border-radius:999px;
+  background:var(--grad);transition:width 1.5s cubic-bezier(.2,.7,.2,1)}
+.stat-strip.in .ss-bar::after{width:100%}
 
 /* ---- program cards with certificate proof ---- */
 .prog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:26px;margin-bottom:20px}
@@ -344,13 +324,9 @@ p{margin:0 0 1em}
   .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
   .pub{flex-direction:column}
   .section{padding:76px 0}
-  .cycle-viz{grid-template-columns:1fr;gap:28px;padding:20px}
-  .sv-grid{gap:10px}
-  .sv-ring,.sv-ring svg,.sv-mid{width:94px}
-  .sv-ring svg,.sv-mid{height:94px}
-  .sv-mid{font-size:1.2rem}
-  .sv-lbl{font-size:.66rem}
-  .cv-item.on{transform:translateX(3px)}
+  .stat-strip{grid-template-columns:repeat(2,1fr);gap:10px}
+  .ss-n{font-size:1.6rem}
+  .ss-item{padding:15px 16px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none !important;transition:none !important}

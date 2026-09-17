@@ -137,34 +137,18 @@
     });
   });
 
-  /* ---- training: stat rings + DMAIC stage list ---- */
-  var cycleViz = document.getElementById("cycleViz");
-  if (cycleViz) {
-    var statsViz = cycleViz.querySelector(".stats-viz");
-    var cvItems = Array.prototype.slice.call(cycleViz.querySelectorAll(".cv-item"));
-    var cvIdx = 0, cvTimer = null;
-
-    function cvShow(i) {
-      cvIdx = (i + cvItems.length) % cvItems.length;
-      cvItems.forEach(function (el, k) { el.classList.toggle("on", k === cvIdx); });
-    }
-    cvItems.forEach(function (el, k) {
-      el.addEventListener("click", function () { cvShow(k); });
-    });
-
-    var cvObserver = new IntersectionObserver(function (entries) {
+  /* ---- training: summary strip ---- */
+  var statStrip = document.getElementById("statStrip");
+  if (statStrip) {
+    var ssObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) {
-          if (statsViz) statsViz.classList.add("in");
-          cvShow(0);
-          if (!cvTimer) cvTimer = setInterval(function () { cvShow(cvIdx + 1); }, 2400);
-        } else if (cvTimer) {
-          clearInterval(cvTimer);
-          cvTimer = null;
+          statStrip.classList.add("in");
+          ssObserver.unobserve(e.target);
         }
       });
-    }, { threshold: 0.3 });
-    cvObserver.observe(cycleViz);
+    }, { threshold: 0.35 });
+    ssObserver.observe(statStrip);
   }
 
   /* ---- training: certificate lightbox ---- */
