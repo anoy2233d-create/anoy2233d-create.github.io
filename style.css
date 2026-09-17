@@ -323,6 +323,9 @@ p{margin:0 0 1em}
 .learn{display:grid;gap:14px;margin-top:16px}
 .learn-block{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:rgba(255,255,255,.02)}
 .learn-block h5{margin:0 0 6px;font-size:.93rem;font-family:"Space Grotesk";color:var(--amber-2);letter-spacing:0}
+.learn-block h5 .mod{display:inline-block;font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;
+  padding:3px 9px;border-radius:999px;background:rgba(232,180,81,.14);border:1px solid rgba(232,180,81,.4);
+  color:var(--amber-2);margin-right:9px;vertical-align:1px;font-family:Inter,sans-serif}
 .learn-block > p{margin:0 0 10px;color:var(--muted);font-size:.85rem}
 .learn-block ul{margin:0;padding-left:18px;color:#bcc3d2;font-size:.87rem}
 .learn-block li{margin-bottom:8px}
