@@ -580,7 +580,6 @@ p{margin:0 0 1em}
   transition:transform 900ms cubic-bezier(.22,1,.36,1)}
 #about .about-text p{color:#bcc3d2}
 #about .about-text strong{color:#fff;font-weight:600}
-#about .about-aside{margin-top:16px;color:var(--muted);font-style:italic;font-size:.9rem}
 
 /* ---------- glossary <term> + tooltip (TASK 3) ---------- */
 #about term{position:relative;cursor:help;font-style:normal;color:inherit;
