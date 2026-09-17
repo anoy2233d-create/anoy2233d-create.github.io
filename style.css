@@ -329,6 +329,7 @@ p{margin:0 0 1em}
 .learn-block li:last-child{margin-bottom:0}
 .learn-block b,.learn-block strong{color:#fff;font-weight:600}
 .learn-block i{color:var(--muted);font-style:italic}
+.learn-block .arrow{color:var(--amber);opacity:.75;margin:0 3px;font-weight:600}
 
 /* ---- certificate lightbox ---- */
 .lightbox{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:28px;
