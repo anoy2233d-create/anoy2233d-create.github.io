@@ -666,3 +666,73 @@ p{margin:0 0 1em}
   #about .about-text{padding-left:18px}
   #about .fact-pills{justify-content:flex-start}
 }
+
+/* ============================================================
+   HERO — photo avatar, rotating role, stat count-up, magnetic
+   buttons, scroll cue, load-in timeline
+   ============================================================ */
+
+/* ---------- TASK 1: photo avatar (ring border unchanged) ---------- */
+.hero .avatar-ring img.avatar{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover}
+
+/* ---------- TASK 2: rotating role line ---------- */
+.hero .hero-role{min-height:1.6em}
+.hero .hero-role #typed{white-space:pre}
+
+/* ---------- TASK 5: scroll cue ---------- */
+.hero .scroll-cue-wrap{display:flex;justify-content:center;margin:34px 0 0}
+.hero .scroll-cue{display:flex;flex-direction:column;align-items:center;gap:9px;
+  background:none;border:0;padding:6px 14px;cursor:pointer;color:var(--muted);
+  transition:opacity 420ms ease,color 220ms ease}
+.hero .scroll-cue .sc-label{font-size:.64rem;letter-spacing:.24em;text-transform:uppercase}
+.hero .scroll-cue .sc-track{position:relative;display:block;width:1px;height:34px;
+  background:rgba(255,255,255,.14);overflow:hidden}
+.hero .scroll-cue .sc-dot{position:absolute;left:50%;top:0;width:5px;height:5px;margin-left:-2.5px;
+  border-radius:50%;background:var(--amber);box-shadow:0 0 8px rgba(232,180,81,.8);
+  animation:sc-travel 1.6s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes sc-travel{
+  0%{transform:translateY(0);opacity:0}
+  15%{opacity:1}
+  70%{transform:translateY(20px);opacity:1}
+  100%{transform:translateY(20px);opacity:0}
+}
+.hero .scroll-cue:hover{color:var(--amber-2)}
+.hero .scroll-cue.is-hidden{opacity:0;pointer-events:none}
+
+/* ---------- TASK 4: magnetic buttons (pointer devices only) ---------- */
+@media (hover:hover) and (pointer:fine){
+  .hero .hero-actions .btn{transition:transform 250ms cubic-bezier(.22,1,.36,1),
+    background 250ms ease,border-color 250ms ease,box-shadow 250ms ease}
+}
+
+/* ---------- TASK 6: load-in timeline (JS + motion only) ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .js .hero .hero-anim{opacity:0;
+    transition:opacity 600ms ease,transform 600ms cubic-bezier(.22,1,.36,1)}
+  .js .hero .hero-anim[data-hero="pill"]{transform:scale(.9)}
+  .js .hero .hero-anim[data-hero="lead"]{transform:translateY(12px)}
+  .js .hero .hero-anim[data-hero="btn"]{transform:translateY(10px)}
+  .js .hero .hero-anim[data-hero="card"]{transform:translateX(30px)}
+  .js .hero .hero-anim.in{opacity:1;transform:none}
+
+  /* name letters carry the gradient themselves so the transform stays aligned */
+  .js .hero .hero-name{background-image:none;color:inherit}
+  .js .hero .hero-name .hl{display:inline-block;
+    background:linear-gradient(180deg,#ffffff,#c3c8d6);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    opacity:0;transform:translateY(20px);
+    transition:opacity 480ms ease,transform 480ms cubic-bezier(.22,1,.36,1)}
+  .js .hero .hero-name .hl.in{opacity:1;transform:none}
+
+  .js .hero .avatar-ring img.avatar{opacity:0;transform:scale(.85);
+    transition:opacity 700ms ease,transform 700ms cubic-bezier(.22,1,.36,1)}
+  .js .hero .avatar-ring.ring-in img.avatar{opacity:1;transform:none}
+}
+
+/* ---------- reduced motion: final state, no motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  .hero .hero-anim,
+  .hero .hero-name .hl,
+  .hero .avatar-ring img.avatar{opacity:1 !important;transform:none !important}
+  .hero .scroll-cue .sc-dot{animation:none !important;opacity:1;transform:none}
+}

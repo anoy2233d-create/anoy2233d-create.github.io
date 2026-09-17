@@ -50,28 +50,7 @@
   }, { rootMargin: "-45% 0px -50% 0px" });
   sections.forEach(function (s) { navObserver.observe(s); });
 
-  /* ---- typing effect ---- */
-  var phrases = [
-    "Operation Excellence Officer",
-    "Industrial & Production Engineer",
-    "Lean · Six Sigma Practitioner",
-    "Data-Driven Process Improver"
-  ];
-  var typedEl = document.getElementById("typed");
-  if (typedEl) {
-    var pi = 0, ci = 0, deleting = false;
-    (function tick() {
-      var word = phrases[pi];
-      if (!deleting) {
-        typedEl.textContent = word.slice(0, ++ci);
-        if (ci === word.length) { deleting = true; return setTimeout(tick, 1500); }
-      } else {
-        typedEl.textContent = word.slice(0, --ci);
-        if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
-      }
-      setTimeout(tick, deleting ? 42 : 78);
-    })();
-  }
+  /* ---- typing effect: moved to the hero block (rotating role) ---- */
 
   /* ---- reveal on scroll ---- */
   var revealObserver = new IntersectionObserver(function (entries) {
@@ -107,7 +86,7 @@
       if (e.isIntersecting) { animateCount(e.target); countObserver.unobserve(e.target); }
     });
   }, { threshold: 0.5 });
-  document.querySelectorAll("[data-count]").forEach(function (el) { countObserver.observe(el); });
+  document.querySelectorAll("[data-count]:not(.mini-num)").forEach(function (el) { countObserver.observe(el); });
 
   /* ---- skill bars fill ---- */
   var barObserver = new IntersectionObserver(function (entries) {
