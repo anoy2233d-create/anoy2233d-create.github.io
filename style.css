@@ -719,3 +719,103 @@ p{margin:0 0 1em}
   .hero .hero-name .hl{opacity:1 !important;transform:none !important}
   .hero .scroll-cue .sc-dot{animation:none !important;opacity:1;transform:none}
 }
+
+/* ============================================================
+   HERO — "Live Process Flow" widget (right column)
+   ============================================================ */
+
+/* two columns again; widget is hidden below 1024px */
+.hero .hero-inner{grid-template-columns:1.12fr .88fr;gap:46px;align-items:center}
+.hero .hero-copy{max-width:620px}
+@media (max-width:1023px){
+  .hero .flow-widget{display:none}
+  .hero .hero-inner{grid-template-columns:1fr;gap:0}
+  .hero .hero-copy{max-width:720px}
+}
+
+.hero .flow-widget{position:relative;width:100%;max-width:620px;justify-self:end}
+.hero .flow-widget .fw-svg{display:block;width:100%;height:auto;overflow:visible}
+
+/* conveyor line */
+.hero .fw-line{fill:none;stroke:rgba(255,255,255,.13);stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
+
+/* stations */
+.hero .fw-station rect{fill:rgba(255,255,255,.035);stroke:rgba(255,255,255,.14);stroke-width:1}
+.hero .fw-station text{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  fill:var(--muted);text-anchor:middle;font-family:Inter,system-ui,sans-serif}
+
+/* bottleneck glow — steady 2s pulse plus a 6s surge */
+.hero .fw-glow,.hero .fw-surge{fill:rgba(232,180,81,.55)}
+.hero .fw-glow{animation:fw-glow 2s ease-in-out infinite}
+.hero .fw-surge{opacity:0;animation:fw-surge 6s ease-in-out infinite}
+@keyframes fw-glow{0%,100%{opacity:.4}50%{opacity:.9}}
+@keyframes fw-surge{0%,72%{opacity:0}82%{opacity:.55}92%,100%{opacity:0}}
+
+/* QC station + per-unit flash (5 flashes per 4s traverse) */
+.hero .fw-qc > rect:first-child{stroke:rgba(232,180,81,.5)}
+.hero .fw-flash{fill:none;stroke:var(--amber);stroke-width:2;opacity:0;
+  transform-box:fill-box;transform-origin:center;animation:fw-flash 4s linear infinite}
+@keyframes fw-flash{
+  0%{opacity:0;transform:scale(1)}
+  50%{opacity:0;transform:scale(1)}
+  53.75%{opacity:.9;transform:scale(1.06)}
+  57.5%{opacity:0;transform:scale(1)}
+  60%{opacity:0;transform:scale(1)}
+  63.75%{opacity:.9;transform:scale(1.06)}
+  67.5%{opacity:0;transform:scale(1)}
+  70%{opacity:0;transform:scale(1)}
+  73.75%{opacity:.9;transform:scale(1.06)}
+  77.5%{opacity:0;transform:scale(1)}
+  80%{opacity:0;transform:scale(1)}
+  83.75%{opacity:.9;transform:scale(1.06)}
+  87.5%{opacity:0;transform:scale(1)}
+  90%{opacity:0;transform:scale(1)}
+  93.75%{opacity:.9;transform:scale(1.06)}
+  97.5%{opacity:0;transform:scale(1)}
+  100%{opacity:0;transform:scale(1)}
+}
+
+/* travelling work units */
+.hero .fw-dot{fill:rgba(78,205,196,.9);opacity:0;animation:fw-dotfade 4s linear infinite}
+@keyframes fw-dotfade{0%{opacity:0}8%{opacity:.9}86%{opacity:.9}100%{opacity:0}}
+
+/* floating stat chips */
+.hero .fw-chip{position:absolute;display:flex;flex-direction:column;gap:2px;
+  padding:8px 12px;border-radius:12px;white-space:nowrap;
+  background:rgba(255,255,255,.05);border:1px solid var(--line);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  box-shadow:0 12px 30px -20px rgba(0,0,0,.95);
+  animation:fw-float 5.2s ease-in-out infinite}
+.hero .fw-chip b{font-size:.58rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.hero .fw-val{font-family:"Space Grotesk",Inter,sans-serif;font-size:.92rem;font-weight:700;color:var(--amber-2);
+  transition:opacity 180ms ease,filter 180ms ease}
+.hero .fw-val.tick{opacity:0;filter:blur(4px)}
+.hero .fw-chip-1{top:0;left:0}
+.hero .fw-chip-2{top:11%;right:0;animation-duration:6.4s;animation-delay:-2.1s}
+.hero .fw-chip-3{bottom:2%;left:30%;animation-duration:4.6s;animation-delay:-3.3s}
+@keyframes fw-float{0%,100%{transform:translateY(-6px)}50%{transform:translateY(6px)}}
+
+/* entrance: scale from .92; flow stays paused until the widget has entered */
+@media (prefers-reduced-motion:no-preference){
+  .js .hero .hero-anim[data-hero="widget"]{transform:scale(.92)}
+  .js .hero .hero-anim[data-hero="widget"].in{transform:none}
+  .js .hero .flow-widget:not(.fw-run) .fw-glow,
+  .js .hero .flow-widget:not(.fw-run) .fw-surge,
+  .js .hero .flow-widget:not(.fw-run) .fw-flash,
+  .js .hero .flow-widget:not(.fw-run) .fw-chip,
+  .js .hero .flow-widget:not(.fw-run) .fw-dot{animation-play-state:paused}
+}
+
+/* reduced motion: clean frozen diagram */
+@media (prefers-reduced-motion:reduce){
+  .hero .flow-widget .fw-glow,
+  .hero .flow-widget .fw-surge,
+  .hero .flow-widget .fw-flash,
+  .hero .flow-widget .fw-chip,
+  .hero .flow-widget .fw-dot{animation:none !important}
+  .hero .flow-widget .fw-glow{opacity:.5}
+  .hero .flow-widget .fw-surge{opacity:0}
+  .hero .flow-widget .fw-flash{opacity:0}
+  .hero .flow-widget .fw-dot{opacity:0}
+  .hero .flow-widget .fw-chip{transform:none}
+}

@@ -75,6 +75,74 @@
           </a>
         </div>
       </div>
+
+      <div class="flow-widget hero-anim" data-hero="widget" id="flowWidget" aria-hidden="true">
+        <svg class="fw-svg" viewBox="0 0 600 400" role="img" aria-hidden="true" focusable="false">
+          <defs>
+            <path id="fwPath" d="M72 210 L192 190 L312 220 L432 198 L552 178"/>
+            <filter id="fwBlur" x="-70%" y="-70%" width="240%" height="240%">
+              <feGaussianBlur stdDeviation="7"/>
+            </filter>
+          </defs>
+
+          <!-- conveyor line -->
+          <path class="fw-line" d="M72 210 L192 190 L312 220 L432 198 L552 178"/>
+
+          <!-- bottleneck (QC) glow: steady 2s pulse + a 6s surge -->
+          <rect class="fw-glow"  x="268" y="199" width="88" height="42" rx="10" filter="url(#fwBlur)"/>
+          <rect class="fw-surge" x="268" y="199" width="88" height="42" rx="10" filter="url(#fwBlur)"/>
+
+          <!-- stations -->
+          <g class="fw-station">
+            <rect x="28" y="189" width="88" height="42" rx="10"/>
+            <text x="72" y="253">Input</text>
+          </g>
+          <g class="fw-station">
+            <rect x="148" y="169" width="88" height="42" rx="10"/>
+            <text x="192" y="233">Assembly</text>
+          </g>
+          <g class="fw-station fw-qc">
+            <rect x="268" y="199" width="88" height="42" rx="10"/>
+            <text x="312" y="263">QC</text>
+            <rect class="fw-flash" x="268" y="199" width="88" height="42" rx="10"/>
+          </g>
+          <g class="fw-station">
+            <rect x="388" y="177" width="88" height="42" rx="10"/>
+            <text x="432" y="241">Pack</text>
+          </g>
+          <g class="fw-station">
+            <rect x="508" y="157" width="88" height="42" rx="10"/>
+            <text x="552" y="221">Ship</text>
+          </g>
+
+          <!-- work units travelling the line (5 dots, 400ms apart, 4s traverse) -->
+          <circle class="fw-dot" r="5" style="animation-delay:0s">
+            <animateMotion dur="4s" repeatCount="indefinite" begin="0s"><mpath href="#fwPath"/></animateMotion>
+          </circle>
+          <circle class="fw-dot" r="5" style="animation-delay:.4s">
+            <animateMotion dur="4s" repeatCount="indefinite" begin="0.4s"><mpath href="#fwPath"/></animateMotion>
+          </circle>
+          <circle class="fw-dot" r="5" style="animation-delay:.8s">
+            <animateMotion dur="4s" repeatCount="indefinite" begin="0.8s"><mpath href="#fwPath"/></animateMotion>
+          </circle>
+          <circle class="fw-dot" r="5" style="animation-delay:1.2s">
+            <animateMotion dur="4s" repeatCount="indefinite" begin="1.2s"><mpath href="#fwPath"/></animateMotion>
+          </circle>
+          <circle class="fw-dot" r="5" style="animation-delay:1.6s">
+            <animateMotion dur="4s" repeatCount="indefinite" begin="1.6s"><mpath href="#fwPath"/></animateMotion>
+          </circle>
+        </svg>
+
+        <span class="fw-chip fw-chip-1">
+          <b>SMV</b><span class="fw-val" data-fw="smv">0.42 min</span>
+        </span>
+        <span class="fw-chip fw-chip-2">
+          <b>Line Balance</b><span class="fw-val" data-fw="lb">94%</span>
+        </span>
+        <span class="fw-chip fw-chip-3">
+          <b>Takt Time</b><span class="fw-val" data-fw="takt">38s</span>
+        </span>
+      </div>
     </div>
 
     <div class="scroll-cue-wrap">
@@ -1272,6 +1340,60 @@
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
   }
+})();
+</script>
+
+<!-- ============================================================
+     HERO — "Live Process Flow" widget: entrance timing + chip
+     number cycling. Vanilla JS only (the flow itself is CSS/SVG).
+     ============================================================ -->
+<script>
+(function () {
+  "use strict";
+  var widget = document.getElementById("flowWidget");
+  if (!widget) return;
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var svg = widget.querySelector("svg");
+
+  /* reduced motion: freeze the diagram, no entrance, no ticking */
+  if (reduce) {
+    if (svg && svg.pauseAnimations) svg.pauseAnimations();
+    return;
+  }
+
+  /* hold the travelling dots until the widget has entered */
+  if (svg && svg.pauseAnimations) svg.pauseAnimations();
+
+  /* ENTRANCE — matches the hero timeline (fade + scale at t=1200ms) */
+  setTimeout(function () {
+    widget.classList.add("in");
+    setTimeout(function () {                       // then release the flow
+      widget.classList.add("fw-run");
+      if (svg && svg.unpauseAnimations) svg.unpauseAnimations();
+    }, 500);
+  }, 1200);
+
+  /* FLOATING CHIPS — tick each number with a blur + fade swap */
+  var TICK = {
+    smv:  { min: 0.40, max: 0.44, dec: 2, suffix: " min", every: 3000 },
+    lb:   { min: 92,   max: 96,   dec: 0, suffix: "%",    every: 3200 },
+    takt: { min: 36,   max: 40,   dec: 0, suffix: "s",    every: 2800 }
+  };
+  Object.keys(TICK).forEach(function (key, i) {
+    var el = widget.querySelector('[data-fw="' + key + '"]');
+    if (!el) return;
+    var cfg = TICK[key];
+    var swap = function () {
+      el.classList.add("tick");                    // blur + fade out
+      setTimeout(function () {
+        var v = cfg.min + Math.random() * (cfg.max - cfg.min);
+        el.textContent = v.toFixed(cfg.dec) + cfg.suffix;
+        el.classList.remove("tick");               // fade back in
+      }, 190);
+    };
+    setTimeout(function () { setInterval(swap, cfg.every); }, i * 900);
+  });
 })();
 </script>
 </body>
