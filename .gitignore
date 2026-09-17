@@ -1,0 +1,7 @@
+openship-deploy.json
+*.env
+*.key
+*.pem
+node_modules/
+.DS_Store
+
