@@ -137,20 +137,6 @@
     });
   });
 
-  /* ---- training: summary strip ---- */
-  var statStrip = document.getElementById("statStrip");
-  if (statStrip) {
-    var ssObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          statStrip.classList.add("in");
-          ssObserver.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.35 });
-    ssObserver.observe(statStrip);
-  }
-
   /* ---- training: certificate lightbox ---- */
   var lb = document.getElementById("lightbox");
   var lbImg = document.getElementById("lbImg");

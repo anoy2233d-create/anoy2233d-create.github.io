@@ -230,20 +230,6 @@ p{margin:0 0 1em}
 .section-lead{color:var(--muted);max-width:70ch;margin:-18px 0 34px;font-size:1rem}
 .section-lead strong{color:var(--text)}
 
-/* ---- training summary strip (compact) ---- */
-.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:6px 0 42px}
-.ss-item{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--panel);
-  position:relative;overflow:hidden;transition:.3s}
-.ss-item:hover{border-color:rgba(232,180,81,.4);transform:translateY(-2px)}
-.ss-n{display:block;font-family:"Space Grotesk";font-size:1.45rem;font-weight:700;line-height:1.1;
-  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.ss-l{display:block;font-size:.73rem;color:var(--muted);margin-top:2px}
-.ss-bar{display:block;height:2px;border-radius:999px;background:rgba(255,255,255,.07);
-  margin-top:9px;position:relative;overflow:hidden}
-.ss-bar::after{content:"";position:absolute;left:0;top:0;bottom:0;width:0;border-radius:999px;
-  background:var(--grad);transition:width 1.5s cubic-bezier(.2,.7,.2,1)}
-.stat-strip.in .ss-bar::after{width:100%}
-
 /* ---- program cards with certificate proof ---- */
 .prog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:26px;margin-bottom:20px}
 .prog{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--panel);transition:.35s}
@@ -324,9 +310,6 @@ p{margin:0 0 1em}
   .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
   .pub{flex-direction:column}
   .section{padding:76px 0}
-  .stat-strip{grid-template-columns:repeat(2,1fr);gap:10px}
-  .ss-n{font-size:1.6rem}
-  .ss-item{padding:15px 16px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none !important;transition:none !important}
