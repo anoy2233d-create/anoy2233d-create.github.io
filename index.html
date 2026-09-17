@@ -50,7 +50,7 @@
       <div class="hero-copy">
         <span class="pill hero-anim" data-hero="pill"><span class="dot"></span> Open to opportunities</span>
         <h1 class="hero-name">Anoy&nbsp;Kumar&nbsp;Das</h1>
-        <p class="hero-role"><span id="typed"></span><span class="caret"></span></p>
+        <p class="hero-role hero-anim" data-hero="role">Industrial Engineer</p>
         <p class="hero-lead hero-anim" data-hero="lead">
           Industrial &amp; Production Engineer from <strong>RUET</strong>, currently driving
           <strong>Operation Excellence</strong> at <strong>Akij Light Engineering Ltd.</strong>
@@ -73,21 +73,6 @@
           <a href="https://github.com/anoy2233d-create" target="_blank" rel="noopener" class="hero-anim" data-hero="btn" aria-label="GitHub" title="GitHub">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.8-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg>
           </a>
-        </div>
-      </div>
-
-      <div class="hero-card hero-anim" data-hero="card">
-        <div class="avatar-ring"><img class="avatar" src="assets/profile-avatar.png" alt="Anoy Kumar Das"></div>
-        <h3>Anoy Kumar Das</h3>
-        <p class="muted">Officer — Operation Excellence (OPEX)</p>
-        <p class="muted small">Akij Light Engineering Ltd. · Akij Resource</p>
-        <div class="mini-stats">
-          <div><span class="mini-num" data-count="3.82" data-dec="2">3.82</span><span class="mini-lbl">CGPA</span></div>
-          <div><span class="mini-num" data-count="6">6</span><span class="mini-lbl">Awards</span></div>
-          <div><span class="mini-num" data-count="1">1</span><span class="mini-lbl">Paper</span></div>
-        </div>
-        <div class="chip-row">
-          <span class="chip">Lean</span><span class="chip">Six Sigma</span><span class="chip">VSM</span><span class="chip">SMV</span>
         </div>
       </div>
     </div>
@@ -1204,53 +1189,6 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  /* TASK 3 — count a number up with rAF + easeOutCubic */
-  function countUp(el, to, dec, ms) {
-    var t0 = performance.now();
-    (function step(now) {
-      var p = Math.min((now - t0) / ms, 1);
-      var e = 1 - Math.pow(1 - p, 3);
-      el.textContent = (to * e).toFixed(dec);
-      if (p < 1) requestAnimationFrame(step);
-      else el.textContent = to.toFixed(dec);
-    })(t0);
-  }
-
-  /* TASK 2 — typewriter rotation through three phrases */
-  var typed = document.getElementById("typed");
-  var PHRASES = ["Data-Driven Process Improver", "Lean & Six Sigma Practitioner", "Line Balancing & SMV Specialist"];
-  function startTyping() {
-    if (!typed) return;
-    if (reduce) { typed.textContent = PHRASES[0]; return; }   // reduced motion: first phrase, static
-    var pi = 0, ci = 0, deleting = false;
-    (function tick() {
-      var word = PHRASES[pi];
-      typed.textContent = word.slice(0, ci);
-      var delay;
-      if (!deleting) {
-        ci++;
-        if (ci > word.length) { deleting = true; delay = 1800; }   // hold
-        else delay = 45;                                            // type
-      } else {
-        ci--;
-        if (ci === 0) { deleting = false; pi = (pi + 1) % PHRASES.length; delay = 320; }
-        else delay = 25;                                            // delete
-      }
-      setTimeout(tick, delay);
-    })();
-  }
-
-  /* TASK 3 — hero stats count from 0 on load */
-  var nums = $$(".mini-num");
-  function startStats() {
-    nums.forEach(function (el) {
-      var to = parseFloat(el.getAttribute("data-count")) || 0;
-      var dec = parseInt(el.getAttribute("data-dec") || "0", 10);
-      if (reduce) { el.textContent = to.toFixed(dec); return; }
-      countUp(el, to, dec, 900);
-    });
-  }
-
   /* TASK 6 — wrap the name into letters (gradient moves with each letter) */
   var nameEl = hero.querySelector(".hero-name");
   var letters = [];
@@ -1275,25 +1213,14 @@
     letters.forEach(function (l, i) {                                           // t=150 letters
       setTimeout(function () { l.classList.add("in"); }, 150 + i * 25);
     });
-    setTimeout(startTyping, 500);                                               // t=500 role
-    setTimeout(function () {                                                    // t=650 lead + card
-      show('[data-hero="lead"]');
-      show('[data-hero="card"]');
-      var ring = hero.querySelector(".avatar-ring");
-      if (ring) ring.classList.add("ring-in");
-    }, 650);
+    setTimeout(function () { show('[data-hero="role"]'); }, 500);               // t=500 role
+    setTimeout(function () { show('[data-hero="lead"]'); }, 650);               // t=650 lead
     $$('[data-hero="btn"]').forEach(function (b, i) {                           // t=800 buttons
       setTimeout(function () { b.classList.add("in"); }, 800 + i * 60);
     });
-    setTimeout(startStats, 1000);                                               // t=1000 stats
   }
 
-  if (reduce) {
-    startTyping();
-    startStats();
-    var ring0 = hero.querySelector(".avatar-ring");
-    if (ring0) ring0.classList.add("ring-in");
-  } else {
+  if (!reduce) {
     requestAnimationFrame(function () { requestAnimationFrame(run); });         // paint the hidden state first
   }
 
