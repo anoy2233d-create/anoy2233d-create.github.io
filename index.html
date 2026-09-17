@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<script>document.documentElement.classList.add("js-enabled");</script>
+<script>document.documentElement.classList.add("js-enabled", "js");</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
 </head>
 <body>
@@ -194,28 +194,159 @@
   <!-- SKILLS -->
   <section id="skills" class="section">
     <div class="container">
-      <p class="eyebrow">03 — Skills</p>
-      <h2 class="section-title">Core <span class="grad">competencies</span></h2>
-      <div class="skill-grid">
-        <div class="skill reveal"><div class="skill-ico">📦</div><h4>Supply Chain Management</h4></div>
-        <div class="skill reveal"><div class="skill-ico">🗓️</div><h4>Production Planning</h4></div>
-        <div class="skill reveal"><div class="skill-ico">🔎</div><h4>Root Cause Analysis</h4></div>
-        <div class="skill reveal"><div class="skill-ico">♻️</div><h4>Continuous Improvement</h4></div>
-        <div class="skill reveal"><div class="skill-ico">📐</div><h4>Value Stream Mapping</h4></div>
-        <div class="skill reveal"><div class="skill-ico">⏱️</div><h4>Work &amp; Time-Motion Study</h4></div>
-        <div class="skill reveal"><div class="skill-ico">⚙️</div><h4>Lean Manufacturing &amp; Six Sigma</h4></div>
-        <div class="skill reveal"><div class="skill-ico">✅</div><h4>QC Tools &amp; TQM</h4></div>
-        <div class="skill reveal"><div class="skill-ico">🤝</div><h4>Team Coordination</h4></div>
+      <p class="eyebrow sk-reveal">03 — Skills</p>
+      <h2 class="section-title sk-reveal">Core <span class="grad">competencies</span></h2>
+
+      <div class="skill-grid" id="skillGrid">
+
+        <article class="skill sk-reveal" tabindex="0">
+          <span class="skill-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="9" width="6" height="6" rx="1.5"/>
+              <rect x="16" y="3" width="6" height="6" rx="1.5"/>
+              <rect x="16" y="15" width="6" height="6" rx="1.5"/>
+              <path d="M8 12h4v-6h4M12 12v6h4"/>
+            </svg>
+          </span>
+          <h4>Supply Chain Management</h4>
+          <p class="skill-desc">Coordinating RM inflow to keep the line running without stoppage</p>
+        </article>
+
+        <article class="skill sk-reveal" tabindex="0">
+          <span class="skill-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="5" width="18" height="16" rx="2"/>
+              <path d="M3 10h18M8 3v4M16 3v4"/>
+              <path d="M8 15h6"/>
+              <path d="M11.5 13l2.5 2-2.5 2"/>
+            </svg>
+          </span>
+          <h4>Production Planning</h4>
+          <p class="skill-desc">Translating demand into achievable daily line targets</p>
+        </article>
+
+        <article class="skill sk-reveal" tabindex="0">
+          <span class="skill-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2.5 12h14"/>
+              <circle cx="20" cy="12" r="2"/>
+              <path d="M8 12 5.5 8.5M8 12l-2.5 3.5"/>
+              <path d="M13.5 12l-2.5-3.5M13.5 12l-2.5 3.5"/>
+            </svg>
+          </span>
+          <h4>Root Cause Analysis</h4>
+          <p class="skill-desc">5 Why, Fishbone and FMEA to fix causes, not symptoms</p>
+        </article>
+
+        <article class="skill sk-reveal" tabindex="0">
+          <span class="skill-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.6 12A8.6 8.6 0 1 1 17.9 6"/>
+              <path d="M21 3.5V7h-3.5"/>
+              <path d="M12 16.4V9.6"/>
+              <path d="M9.2 12.4 12 9.6l2.8 2.8"/>
+            </svg>
+          </span>
+          <h4>Continuous Improvement</h4>
+          <p class="skill-desc">Small, sustained gains locked in with control plans</p>
+        </article>
+
+        <article class="skill skill--wide sk-reveal" tabindex="0">
+          <span class="skill-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2.5" y="3" width="7" height="6" rx="1.5"/>
+              <rect x="14.5" y="3" width="7" height="6" rx="1.5"/>
+              <path d="M9.5 6h5"/>
+              <path d="M2.5 15h19"/>
+              <path d="M6.5 13.5v3M17.5 13.5v3"/>
+            </svg>
+          </span>
+          <h4>Value Stream Mapping</h4>
+          <p class="skill-desc">Mapping value-added vs non-value-added time to expose where flow breaks</p>
+        </article>
+
+        <article class="skill skill--wide sk-reveal" tabindex="0">
+          <span class="skill-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="8.6" cy="8.6" r="3"/>
+              <path d="M8.6 3.2v2.4M8.6 11.6v2.4M3.2 8.6h2.4M11.6 8.6h2.4"/>
+              <path d="M4 19.5c2.8-5.5 7.2-5.5 10 0"/>
+            </svg>
+          </span>
+          <h4>Lean Manufacturing &amp; Six Sigma</h4>
+          <p class="skill-desc">Cutting waste and variation through structured DMAIC</p>
+        </article>
+
+        <article class="skill sk-reveal" tabindex="0">
+          <span class="skill-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9.5" cy="14" r="6"/>
+              <path d="M9.5 14V10.5"/>
+              <path d="M7.5 4.5h4"/>
+              <path d="M9.5 6.5v1.5"/>
+              <path d="M18.5 9.2a7 7 0 0 1 0 9.6"/>
+            </svg>
+          </span>
+          <h4>Work &amp; Time-Motion Study</h4>
+          <p class="skill-desc">Setting defensible SMVs through PMTS and direct observation</p>
+        </article>
+
+        <article class="skill sk-reveal" tabindex="0">
+          <span class="skill-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4.5" y="4.5" width="15" height="16" rx="2.2"/>
+              <path d="M9 4.5V3h6v1.5"/>
+              <path d="M8.4 10.4l2.2 2.2 4.4-4.8"/>
+              <path d="M8.8 17.6v-2M12 17.6v-3.6M15.2 17.6v-1.4"/>
+            </svg>
+          </span>
+          <h4>QC Tools &amp; TQM</h4>
+          <p class="skill-desc">The seven QC tools applied to real defect data</p>
+        </article>
+
+        <article class="skill sk-reveal" tabindex="0">
+          <span class="skill-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="6.5" r="2.5"/>
+              <circle cx="5.5" cy="17" r="2.5"/>
+              <circle cx="18.5" cy="17" r="2.5"/>
+              <path d="M10.3 8.5 7.4 14.7"/>
+              <path d="M13.7 8.5l2.9 6.2"/>
+              <path d="M8 17a4 4 0 0 1 8 0"/>
+            </svg>
+          </span>
+          <h4>Team Coordination</h4>
+          <p class="skill-desc">Leading cross-functional teams on the floor and off it</p>
+        </article>
+
       </div>
 
-      <h3 class="sub-title">Tools &amp; Technologies</h3>
-      <div class="bars reveal">
-        <div class="bar"><div class="bar-top"><span>Microsoft Excel</span><span>90%</span></div><div class="track"><i style="--w:90%"></i></div></div>
-        <div class="bar"><div class="bar-top"><span>Power BI</span><span>85%</span></div><div class="track"><i style="--w:85%"></i></div></div>
-        <div class="bar"><div class="bar-top"><span>Python</span><span>75%</span></div><div class="track"><i style="--w:75%"></i></div></div>
-        <div class="bar"><div class="bar-top"><span>SQL</span><span>70%</span></div><div class="track"><i style="--w:70%"></i></div></div>
-        <div class="bar"><div class="bar-top"><span>Google Sheets</span><span>90%</span></div><div class="track"><i style="--w:90%"></i></div></div>
-        <div class="bar"><div class="bar-top"><span>MS Word &amp; PowerPoint</span><span>90%</span></div><div class="track"><i style="--w:90%"></i></div></div>
+      <h3 class="sub-title sk-reveal">Tools &amp; Technologies</h3>
+      <div class="bars sk-reveal" id="skillBars">
+        <div class="bar">
+          <div class="bar-top"><span>Microsoft Excel</span><span class="bar-val">90%</span></div>
+          <div class="track" role="progressbar" aria-label="Microsoft Excel" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"><i style="--p:.90"></i></div>
+        </div>
+        <div class="bar">
+          <div class="bar-top"><span>Power BI</span><span class="bar-val">85%</span></div>
+          <div class="track" role="progressbar" aria-label="Power BI" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"><i style="--p:.85"></i></div>
+        </div>
+        <div class="bar">
+          <div class="bar-top"><span>Python</span><span class="bar-val">75%</span></div>
+          <div class="track" role="progressbar" aria-label="Python" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><i style="--p:.75"></i></div>
+        </div>
+        <div class="bar">
+          <div class="bar-top"><span>SQL</span><span class="bar-val">70%</span></div>
+          <div class="track" role="progressbar" aria-label="SQL" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"><i style="--p:.70"></i></div>
+        </div>
+        <div class="bar">
+          <div class="bar-top"><span>Google Sheets</span><span class="bar-val">90%</span></div>
+          <div class="track" role="progressbar" aria-label="Google Sheets" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"><i style="--p:.90"></i></div>
+        </div>
+        <div class="bar">
+          <div class="bar-top"><span>MS Word &amp; PowerPoint</span><span class="bar-val">90%</span></div>
+          <div class="track" role="progressbar" aria-label="MS Word and PowerPoint" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"><i style="--p:.90"></i></div>
+        </div>
       </div>
     </div>
   </section>
@@ -746,6 +877,102 @@
     });
   }, { threshold: 0.05 });
   $$(".learn").forEach(function (l) { modObs.observe(l); });
+})();
+</script>
+
+<!-- ============================================================
+     SKILLS (#skills) — SVG draw-in, cursor spotlight, tool bars,
+     scroll reveal. Vanilla JS only. Animates transform/opacity.
+     ============================================================ -->
+<script>
+(function () {
+  "use strict";
+  var section = document.getElementById("skills");
+  if (!section) return;
+
+  var $$ = function (sel, root) { return Array.prototype.slice.call((root || section).querySelectorAll(sel)); };
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* TASK 5 — measure each icon shape so the hover draw-in uses a real length */
+  $$(".skill-ico svg", section).forEach(function (svg) {
+    $$("path, circle, rect, line, polyline, ellipse", svg).forEach(function (shape) {
+      if (typeof shape.getTotalLength !== "function") return;
+      var len;
+      try { len = shape.getTotalLength(); } catch (err) { return; }
+      if (!len) return;
+      shape.style.strokeDasharray = len;
+      shape.style.strokeDashoffset = "0";          // stays drawn by default
+      shape.style.setProperty("--len", len);       // keyframe start value
+    });
+  });
+
+  /* TASK 6 — tool bars: fill + counter in sync (900ms easeOutCubic, 80ms stagger) */
+  var barsWrap = document.getElementById("skillBars");
+  var bars = barsWrap ? $$(".bar", barsWrap) : [];
+  if (barsWrap && bars.length && !reduce) {
+    bars.forEach(function (row) {
+      var out = row.querySelector(".bar-val");
+      if (out) out.textContent = "0%";             // zeroed only when JS + motion allowed
+    });
+    var barObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        barObs.unobserve(e.target);
+        bars.forEach(function (row, i) {
+          var track = row.querySelector(".track");
+          var out = row.querySelector(".bar-val");
+          var val = track ? +track.getAttribute("aria-valuenow") : 0;
+          setTimeout(function () {
+            row.classList.add("filled");
+            var t0 = performance.now();
+            (function step(now) {
+              var p = Math.min((now - t0) / 900, 1);
+              var eased = 1 - Math.pow(1 - p, 3);
+              if (out) out.textContent = Math.round(val * eased) + "%";
+              if (p < 1) requestAnimationFrame(step);
+              else if (out) out.textContent = val + "%";
+            })(t0);
+          }, i * 80);
+        });
+      });
+    }, { threshold: 0.2 });
+    barObs.observe(barsWrap);
+  }
+
+  /* TASK 7 — one shared reveal observer (threshold .2, once, 60ms stagger) */
+  var targets = $$(".sk-reveal", section);
+  if (targets.length && !reduce) {
+    var revObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        var i = Math.min(+el.getAttribute("data-i") || 0, 8);
+        setTimeout(function () { el.classList.add("sk-in"); }, i * 60);
+        revObs.unobserve(el);
+      });
+    }, { threshold: 0.2 });
+    targets.forEach(function (el, i) { el.setAttribute("data-i", i); revObs.observe(el); });
+  }
+
+  /* TASK 4 — cursor spotlight, rAF-throttled, pointer devices only */
+  var grid = document.getElementById("skillGrid");
+  if (grid && !reduce && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    var cards = $$(".skill", grid);
+    var pending = false, mx = 0, my = 0;
+    grid.addEventListener("mousemove", function (ev) {
+      mx = ev.clientX; my = ev.clientY;
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(function () {
+        pending = false;
+        cards.forEach(function (card) {
+          var r = card.getBoundingClientRect();
+          card.style.setProperty("--mx", (mx - r.left) + "px");
+          card.style.setProperty("--my", (my - r.top) + "px");
+        });
+      });
+    }, { passive: true });
+  }
 })();
 </script>
 </body>

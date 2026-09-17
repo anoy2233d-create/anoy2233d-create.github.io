@@ -430,3 +430,126 @@ p{margin:0 0 1em}
   #training .t-stat:nth-child(n+3){border-top:1px solid var(--line)}
   #training .t-num{font-size:1.7rem}
 }
+
+/* ============================================================
+   SKILLS (#skills) — inline SVG icons, bento grid, descriptions,
+   cursor spotlight, tool bars, scroll reveal
+   ============================================================ */
+
+/* ---------- bento grid (TASK 2) ---------- */
+#skills .skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+#skills .skill{
+  position:relative;display:block;
+  border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px;background:var(--panel);
+  transition:transform 220ms cubic-bezier(.22,1,.36,1),
+             background 220ms cubic-bezier(.22,1,.36,1),
+             border-color 220ms cubic-bezier(.22,1,.36,1),
+             box-shadow 220ms cubic-bezier(.22,1,.36,1)}
+#skills .skill--wide{grid-column:span 2}
+#skills .skill h4{font-size:.96rem;margin:0;color:var(--text)}
+
+/* ---------- icon container (TASK 1) ---------- */
+#skills .skill-ico{
+  display:grid;place-items:center;width:44px;height:44px;margin-bottom:14px;
+  border-radius:12px;color:var(--amber-2);
+  background:linear-gradient(140deg,rgba(232,180,81,.09),rgba(78,205,196,.06));
+  border:1px solid rgba(232,180,81,.2);
+  transition:background 220ms cubic-bezier(.22,1,.36,1),
+             border-color 220ms cubic-bezier(.22,1,.36,1),
+             color 220ms cubic-bezier(.22,1,.36,1)}
+#skills .skill-ico svg{display:block;width:24px;height:24px}
+#skills .skill--wide .skill-ico{width:52px;height:52px;border-radius:14px}
+#skills .skill--wide .skill-ico svg{width:28px;height:28px}
+
+/* ---------- description reveal (TASK 3) ---------- */
+/* base = always visible → the no-JS fallback */
+#skills .skill-desc{
+  margin:8px 0 0;font-size:.82rem;line-height:1.5;color:var(--muted);
+  transition:opacity 260ms ease,max-height 260ms ease}
+#skills .skill--wide .skill-desc{font-size:.85rem}
+/* collapsed + hover/focus reveal only when JS is on */
+.js #skills .skill-desc{opacity:0;max-height:0;overflow:hidden}
+.js #skills .skill:hover .skill-desc,
+.js #skills .skill:focus-visible .skill-desc,
+.js #skills .skill:focus-within .skill-desc{opacity:1;max-height:120px}
+
+/* ---------- cursor spotlight (TASK 4) ---------- */
+#skills .skill::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:0;
+  background:radial-gradient(250px circle at var(--mx,50%) var(--my,50%),
+             rgba(232,180,81,.13),transparent 62%);
+  opacity:0;transition:opacity 250ms ease}
+#skills .skill:hover::before{opacity:1}
+#skills .skill::after{
+  content:"";position:absolute;inset:-1px;border-radius:calc(var(--radius) + 1px);
+  pointer-events:none;z-index:1;padding:1px;
+  background:radial-gradient(250px circle at var(--mx,50%) var(--my,50%),
+             rgba(232,180,81,.6),transparent 60%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:0;transition:opacity 250ms ease}
+#skills .skill:hover::after{opacity:1}
+#skills .skill > *{position:relative;z-index:2}
+
+/* ---------- card hover / focus (TASK 5) ---------- */
+#skills .skill:hover,
+#skills .skill:focus-visible{
+  transform:translateY(-4px);
+  background:var(--panel-2);
+  border-color:var(--line-2);
+  box-shadow:0 22px 44px -30px rgba(232,180,81,.55);
+  outline:none}
+#skills .skill:focus-visible{box-shadow:0 0 0 2px rgba(232,180,81,.55),0 22px 44px -30px rgba(232,180,81,.55)}
+#skills .skill:hover .skill-ico,
+#skills .skill:focus-visible .skill-ico{
+  background:linear-gradient(140deg,rgba(232,180,81,.2),rgba(78,205,196,.12));
+  border-color:rgba(232,180,81,.5);
+  color:var(--amber)}
+#skills .skill:hover .skill-ico svg *,
+#skills .skill:focus-visible .skill-ico svg *{animation:sk-draw 500ms cubic-bezier(.22,1,.36,1)}
+@keyframes sk-draw{from{stroke-dashoffset:var(--len,60)}to{stroke-dashoffset:0}}
+
+/* ---------- tools bars (TASK 6) ---------- */
+#skills .bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px 30px}
+#skills .bar-top{display:flex;justify-content:space-between;font-size:.87rem;margin-bottom:7px;color:#bcc3d2}
+#skills .bar-val{color:var(--amber-2);font-variant-numeric:tabular-nums;font-weight:600}
+#skills .track{height:6px;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden}
+#skills .track i{
+  display:block;height:100%;width:100%;border-radius:999px;transform-origin:left center;
+  transform:scaleX(var(--p,.9));
+  background:linear-gradient(90deg,var(--amber),var(--teal));
+  transition:transform 900ms cubic-bezier(.22,1,.36,1)}
+
+/* ---------- scroll reveal (TASK 7) + pre-animation states ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .js #skills .sk-reveal{opacity:0;transform:translateY(18px);
+    transition:opacity 600ms ease,transform 600ms cubic-bezier(.22,1,.36,1)}
+  .js #skills .sk-reveal.sk-in{opacity:1;transform:none}
+  /* hover lift must outrank the revealed state */
+  .js #skills .skill.sk-in:hover,
+  .js #skills .skill.sk-in:focus-visible{transform:translateY(-4px)}
+  .js #skills .track i{transform:scaleX(0)}
+  .js #skills .bar.filled .track i{transform:scaleX(var(--p,.9))}
+}
+
+/* ---------- reduced motion: final state, no motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  #skills .sk-reveal{opacity:1 !important;transform:none !important}
+  #skills .skill-desc{opacity:1 !important;max-height:none !important}
+  #skills .track i{transform:scaleX(var(--p,.9)) !important}
+  #skills .skill::before,
+  #skills .skill::after{display:none !important}
+  #skills .skill:hover .skill-ico svg *,
+  #skills .skill:focus-visible .skill-ico svg *{animation:none !important}
+}
+
+/* ---------- responsive (TASK 2/3) ---------- */
+@media (max-width:1023px){
+  #skills .skill-grid{grid-template-columns:repeat(2,1fr)}
+  #skills .skill--wide{grid-column:span 1}
+}
+@media (max-width:639px){
+  #skills .skill-grid{grid-template-columns:1fr}
+  #skills .skill-desc{opacity:1;max-height:none}
+}
