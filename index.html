@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script>document.documentElement.classList.add("js-enabled");</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
 </head>
 <body>
@@ -225,11 +226,53 @@
       <p class="eyebrow">04 — Training</p>
       <h2 class="section-title">Trained to <span class="grad">see waste.</span><br>Equipped to remove it.</h2>
       <p class="section-lead">
-        Two intensive, hands-on programs — <strong>Production &amp; Operation Excellence</strong> and
-        <strong>Data Analytics</strong> — rebuilt into the tools I use on the floor every day: measuring work with
-        <strong>SMV &amp; PMTS</strong>, finding the bottleneck and <strong>balancing the line</strong>, removing variation with
-        <strong>Six Sigma &amp; DMAIC</strong>, and letting <strong>data — not guesswork — drive the decision</strong>.
+        Eight months of structured, hands-on training across two programs —
+        <strong>Production &amp; Operation Excellence</strong> and <strong>Data Analytics</strong> —
+        that I now use daily on the floor: measuring work with <strong>SMV &amp; PMTS</strong>,
+        finding the bottleneck and <strong>rebalancing the line</strong>, cutting variation through
+        <strong>Six Sigma &amp; DMAIC</strong>, and backing every decision with
+        <strong>data instead of instinct</strong>.
       </p>
+
+      <!-- A) stat strip -->
+      <div class="t-stats" id="tStats">
+        <div class="t-stat">
+          <span class="t-num" data-t-count="8">8</span>
+          <span class="t-lbl">Months Training</span>
+        </div>
+        <div class="t-stat">
+          <span class="t-num" data-t-count="2">2</span>
+          <span class="t-lbl">Accredited Certifications</span>
+        </div>
+        <div class="t-stat">
+          <span class="t-num" data-t-count="8">8</span>
+          <span class="t-lbl">Training Modules</span>
+        </div>
+        <div class="t-stat">
+          <span class="t-num" data-t-count="5">5</span>
+          <span class="t-lbl">DMAIC Sessions</span>
+        </div>
+      </div>
+
+      <!-- B) waste elimination -->
+      <div class="t-waste" id="tWaste">
+        <p class="t-waste-cap">The eight wastes I'm trained to identify — and eliminate.</p>
+        <div class="t-waste-head">
+          <span class="t-waste-num" id="tWasteNum" aria-live="off">0</span>
+          <span class="t-waste-lbl">Wastes identified</span>
+        </div>
+        <ul class="t-chips" id="tChips" aria-hidden="false">
+          <li class="t-chip">Transport</li>
+          <li class="t-chip">Inventory</li>
+          <li class="t-chip">Motion</li>
+          <li class="t-chip">Waiting</li>
+          <li class="t-chip">Overproduction</li>
+          <li class="t-chip">Over-processing</li>
+          <li class="t-chip">Defects</li>
+          <li class="t-chip">Unused Skills</li>
+        </ul>
+        <p class="t-waste-done" id="tWasteDone"><span class="t-check" aria-hidden="true">✓</span> Waste removed.</p>
+      </div>
 
       <!-- improvement-cycle visual (DMAIC — the thread through every course) -->
       <!-- programs with certificates -->
@@ -529,5 +572,178 @@
 </div>
 
 <script src="script.js"></script>
+
+<!-- ============================================================
+     TRAINING (#training) — scroll-triggered sequence + micro-interactions
+     Vanilla JS only. Animates transform/opacity only.
+     ============================================================ -->
+<script>
+(function () {
+  "use strict";
+  var section = document.getElementById("training");
+  if (!section) return;
+  // Reduced motion: CSS already renders the FINAL state — do nothing.
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  var $$ = function (sel, root) { return Array.prototype.slice.call((root || section).querySelectorAll(sel)); };
+  var easeOutCubic = function (t) { return 1 - Math.pow(1 - t, 3); };
+  var at = function (ms, fn) { setTimeout(fn, ms); };
+
+  /* count 0 -> target with requestAnimationFrame (900ms, easeOutCubic) */
+  function countUp(el, to, ms) {
+    var t0 = performance.now();
+    el.style.willChange = "contents";
+    (function step(now) {
+      var p = Math.min((now - t0) / ms, 1);
+      el.textContent = Math.round(to * easeOutCubic(p));
+      if (p < 1) requestAnimationFrame(step);
+      else { el.textContent = to; el.style.willChange = ""; }
+    })(t0);
+  }
+
+  /* STEP 1 — wrap every headline word in <span class="word"> at load (not by hand).
+     The gradient phrase is animated as ONE unit so background-clip:text stays aligned. */
+  var title = section.querySelector(".section-title");
+  (function wrapWords(root) {
+    Array.prototype.slice.call(root.childNodes).forEach(function (node) {
+      if (node.nodeType === 3) {
+        var frag = document.createDocumentFragment();
+        node.textContent.split(/(\s+)/).forEach(function (part) {
+          if (!part) return;
+          if (/^\s+$/.test(part)) frag.appendChild(document.createTextNode(part));
+          else {
+            var s = document.createElement("span");
+            s.className = "word";
+            s.textContent = part;
+            frag.appendChild(s);
+          }
+        });
+        root.replaceChild(frag, node);
+      } else if (node.nodeType === 1 && node.tagName !== "BR") {
+        if (node.classList.contains("grad")) node.classList.add("word");
+        else wrapWords(node);
+      }
+    });
+  })(title);
+
+  var words = $$(".word", title);
+  var stats = $$(".t-num");
+  var chips = $$(".t-chip");
+  var wasteNum = section.querySelector("#tWasteNum");
+  var wasteDone = section.querySelector("#tWasteDone");
+  var sweep = section.querySelector(".section-title .grad");
+
+  function run() {
+    if (wasteNum) wasteNum.textContent = "8";                 // counter starts at 8
+
+    // t=0 — headline words: fade + rise, 60ms stagger
+    words.forEach(function (w, i) {
+      at(i * 60, function () {
+        w.style.willChange = "transform,opacity";
+        w.classList.add("in");
+        at(420, function () { w.style.willChange = ""; });
+      });
+    });
+
+    // t=700 — one-time gradient sweep across "see waste."
+    at(700, function () { if (sweep) sweep.classList.add("sweep"); });
+
+    // t=900 — stat numbers count up
+    at(900, function () { stats.forEach(function (el) { countUp(el, +el.getAttribute("data-t-count"), 900); }); });
+
+    // t=1100 — chips fade + rise, 70ms stagger
+    chips.forEach(function (c, i) {
+      at(1100 + i * 70, function () {
+        c.style.willChange = "transform,opacity";
+        c.classList.add("in");
+        at(420, function () { c.style.willChange = ""; });
+      });
+    });
+
+    // t=1900 — elimination pass: strike each chip (110ms apart) + decrement counter
+    chips.forEach(function (c, i) {
+      at(1900 + i * 110, function () {
+        c.classList.add("removed");
+        if (wasteNum) wasteNum.textContent = String(8 - (i + 1));
+      });
+    });
+
+    // t≈2800 — "Waste removed."
+    at(2800, function () {
+      if (!wasteDone) return;
+      wasteDone.style.willChange = "transform,opacity";
+      wasteDone.classList.add("in");
+      at(520, function () { wasteDone.style.willChange = ""; });
+    });
+  }
+
+  /* STEP 2 — single trigger, threshold .35, fires ONCE */
+  var once = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { once.unobserve(e.target); run(); } });
+  }, { threshold: 0.35 });
+  once.observe(section);
+
+  /* STEP 3 — certificate card 3D tilt (max 6deg, pointer devices only) */
+  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    $$(".cert-frame").forEach(function (card) {
+      card.addEventListener("mousemove", function (ev) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty("--ry", (((ev.clientX - r.left) / r.width - 0.5) * 12).toFixed(2) + "deg");
+        card.style.setProperty("--rx", (((ev.clientY - r.top) / r.height - 0.5) * -12).toFixed(2) + "deg");
+      });
+      card.addEventListener("mouseleave", function () {
+        card.style.setProperty("--rx", "0deg");
+        card.style.setProperty("--ry", "0deg");
+      });
+    });
+  }
+
+  /* STEP 4 — VERIFIED badge shimmer, only while the card is in the viewport */
+  var sealObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { e.target.classList.toggle("shine", e.isIntersecting); });
+  }, { threshold: 0.2 });
+  $$(".cert-seal").forEach(function (s) { sealObs.observe(s); });
+
+  /* STEP 5 — accordion: measured scrollHeight over 320ms + chevron + <li> stagger (40ms) */
+  $$(".prog-toggle").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var card = btn.closest(".prog");
+      var panel = card.querySelector(".prog-detail");
+      if (!panel) return;
+      var open = card.classList.toggle("open");
+
+      if (open) {
+        panel.style.maxHeight = panel.scrollHeight + "px";     // measured, not guessed
+        $$("li", panel).forEach(function (li, i) {
+          li.classList.remove("li-in");
+          void li.offsetWidth;                                  // reflow to restart the stagger
+          setTimeout(function () { li.classList.add("li-in"); }, i * 40);
+        });
+        setTimeout(function () { panel.style.maxHeight = "none"; }, 340);  // release after transition
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";      // "none" -> px, so it can animate
+        void panel.offsetWidth;
+        panel.style.maxHeight = "0px";
+      }
+    });
+  });
+
+  /* STEP 6 — module cards: fade + rise (16px), 80ms stagger, once */
+  var modObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      $$(".learn-block", e.target).forEach(function (b, i) {
+        setTimeout(function () {
+          b.style.willChange = "transform,opacity";
+          b.classList.add("mod-in");
+          at(520, function () { b.style.willChange = ""; });
+        }, i * 80);
+      });
+      modObs.unobserve(e.target);
+    });
+  }, { threshold: 0.05 });
+  $$(".learn").forEach(function (l) { modObs.observe(l); });
+})();
+</script>
 </body>
 </html>

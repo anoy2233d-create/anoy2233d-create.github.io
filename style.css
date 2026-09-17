@@ -315,3 +315,118 @@ p{margin:0 0 1em}
   *{animation:none !important;transition:none !important}
   .reveal{opacity:1;transform:none}
 }
+
+/* ============================================================
+   TRAINING (#training) — stat strip, waste elimination,
+   scroll sequence + card micro-interactions
+   ============================================================ */
+
+/* ---------- A) stat strip ---------- */
+#training .t-stats{display:flex;align-items:stretch;margin:6px 0 34px;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+#training .t-stat{flex:1 1 0;min-width:0;padding:18px 20px;text-align:center}
+#training .t-stat + .t-stat{border-left:1px solid var(--line)}
+#training .t-num{display:block;font-family:"Space Grotesk",Inter,sans-serif;font-size:2.1rem;font-weight:700;
+  line-height:1.05;color:var(--amber-2);font-variant-numeric:tabular-nums}
+#training .t-lbl{display:block;margin-top:6px;font-size:.66rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted)}
+
+/* ---------- B) waste elimination ---------- */
+#training .t-waste{margin:0 0 44px;padding:22px 22px 20px;border:1px solid var(--line);
+  border-radius:var(--radius);background:var(--panel)}
+#training .t-waste-cap{margin:0 0 16px;font-size:.86rem;color:var(--muted)}
+#training .t-waste-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px}
+#training .t-waste-num{font-family:"Space Grotesk",Inter,sans-serif;font-size:2.4rem;font-weight:700;
+  line-height:1;color:var(--amber-2);font-variant-numeric:tabular-nums}
+#training .t-waste-lbl{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+#training .t-chips{display:flex;flex-wrap:wrap;gap:9px;margin:0;padding:0;list-style:none}
+/* base = FINAL state (removed) → this is what no-JS and reduced-motion render */
+#training .t-chip{position:relative;display:inline-block;padding:7px 14px;border:1px solid var(--line-2);
+  border-radius:999px;background:transparent;color:var(--muted);font-size:.68rem;letter-spacing:.12em;
+  text-transform:uppercase;opacity:.28;
+  transition:opacity .35s ease,transform .4s ease,border-color .3s ease,color .3s ease}
+#training .t-chip::after{content:"";position:absolute;left:11px;right:11px;top:50%;height:1px;background:var(--muted);
+  transform:scaleX(1);transform-origin:left center;transition:transform .22s ease}
+#training .t-waste-done{display:flex;align-items:center;gap:9px;margin:18px 0 0;color:var(--teal);
+  font-weight:600;font-size:.9rem}
+#training .t-check{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+  border:1px solid rgba(78,205,196,.5);background:rgba(78,205,196,.12);font-size:.7rem}
+
+/* removed state is the BASE state above; JS resets it and re-applies it per chip */
+
+
+/* ---------- headline words + one-time gradient sweep ---------- */
+#training .section-title .word{display:inline-block}
+#training .section-title .grad{background-image:linear-gradient(100deg,var(--amber) 0%,var(--amber-2) 34%,
+  #fff 50%,var(--teal) 66%,var(--teal) 100%);background-size:230% 100%;background-position:0% 0;
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+#training .section-title .grad.sweep{animation:t-sweep 1.2s cubic-bezier(.4,0,.2,1) 1 both}
+@keyframes t-sweep{from{background-position:110% 0}to{background-position:0% 0}}
+
+/* ---------- accordion: measured max-height + chevron + <li> stagger ---------- */
+#training .prog-detail{display:block;grid-template-rows:none;max-height:none;overflow:hidden;
+  transition:max-height .32s ease}
+#training .prog-detail > .learn{overflow:visible;min-height:0}
+#training .prog-toggle i{transition:transform .32s ease}
+#training .prog.open .prog-toggle i{transform:rotate(180deg)}
+#training .prog-detail li{transition:opacity .3s ease,transform .3s ease}
+
+/* ---------- certificate card: 3D tilt + accent glow (pointer only) ---------- */
+@media (hover:hover) and (pointer:fine){
+  #training .cert-frame{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+    transition:transform .15s ease,border-color .3s ease,box-shadow .3s ease}
+  #training .cert-frame:hover{border-color:rgba(232,180,81,.55);
+    box-shadow:0 22px 50px -26px rgba(232,180,81,.6)}
+}
+
+/* ---------- VERIFIED badge shimmer (only while in view) ---------- */
+#training .cert-seal{overflow:hidden}
+#training .cert-seal::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(100deg,transparent 32%,rgba(255,255,255,.55) 50%,transparent 68%);
+  transform:translateX(-130%)}
+#training .cert-seal.shine::after{animation:t-shimmer 4s ease-in-out infinite}
+@keyframes t-shimmer{0%{transform:translateX(-130%)}16%{transform:translateX(130%)}100%{transform:translateX(130%)}}
+
+/* ---------- pre-animation states (JS + motion allowed only) ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .js-enabled #training .section-title .word{opacity:0;transform:translateY(12px);
+    transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.2,1)}
+  .js-enabled #training .section-title .word.in{opacity:1;transform:none}
+  .js-enabled #training .t-chip{opacity:0;transform:translateY(10px);
+    border-color:rgba(232,180,81,.5);color:var(--amber-2)}
+  .js-enabled #training .t-chip::after{transform:scaleX(0)}
+  .js-enabled #training .t-chip.in{opacity:1;transform:none}
+  /* removal must win over .in — higher specificity */
+  .js-enabled #training .t-chips .t-chip.removed{opacity:.28;border-color:var(--line-2);color:var(--muted)}
+  .js-enabled #training .t-chips .t-chip.removed::after{transform:scaleX(1)}
+  .js-enabled #training .t-waste-done{opacity:0;transform:translateY(6px);
+    transition:opacity .5s ease,transform .5s ease}
+  .js-enabled #training .t-waste-done.in{opacity:1;transform:none}
+  .js-enabled #training .prog-detail{max-height:0}
+  .js-enabled #training .prog.open .prog-detail{max-height:none}
+  .js-enabled #training .prog-detail li{opacity:0;transform:translateY(8px)}
+  .js-enabled #training .prog-detail li.li-in{opacity:1;transform:none}
+  .js-enabled #training .learn-block{opacity:0;transform:translateY(16px);
+    transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.2,1)}
+  .js-enabled #training .learn-block.mod-in{opacity:1;transform:none}
+}
+
+/* ---------- reduced motion: render the FINAL state, no motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  #training .section-title .word,
+  #training .t-waste-done,
+  #training .learn-block,
+  #training .prog-detail li{opacity:1 !important;transform:none !important}
+  #training .prog-detail{max-height:none !important}
+  #training .cert-seal.shine::after,
+  #training .section-title .grad.sweep{animation:none !important}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:640px){
+  #training .t-stats{flex-wrap:wrap}
+  #training .t-stat{flex:1 1 50%;max-width:50%}
+  #training .t-stat:nth-child(odd){border-left:0}
+  #training .t-stat:nth-child(n+3){border-top:1px solid var(--line)}
+  #training .t-num{font-size:1.7rem}
+}

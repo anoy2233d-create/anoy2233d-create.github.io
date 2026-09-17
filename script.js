@@ -129,14 +129,6 @@
     });
   }
 
-  /* ---- training: expandable program cards ---- */
-  document.querySelectorAll(".prog-toggle").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var card = btn.closest(".prog");
-      if (card) card.classList.toggle("open");
-    });
-  });
-
   /* ---- training: certificate lightbox ---- */
   var lb = document.getElementById("lightbox");
   var lbImg = document.getElementById("lbImg");
