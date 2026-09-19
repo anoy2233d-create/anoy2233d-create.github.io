@@ -76,12 +76,7 @@
         </div>
       </div>
 
-      <div class="flow-widget hero-anim" data-hero="widget" id="flowWidget">
-        <div class="fw-tabs" role="tablist" aria-label="Process view">
-          <button class="fw-tab is-active" type="button" role="tab" data-scene="prod" aria-selected="true">Production</button>
-          <button class="fw-tab" type="button" role="tab" data-scene="supply" aria-selected="false">Supply Chain</button>
-        </div>
-
+      <div class="flow-widget hero-anim" data-hero="widget" id="flowWidget" aria-hidden="true">
         <div class="fw-stage" id="fwStage">
 
           <div class="fw-scene fw-scene--prod is-active" data-scene="prod">
@@ -1431,7 +1426,6 @@
 
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var scenes = Array.prototype.slice.call(widget.querySelectorAll(".fw-scene"));
-  var tabs = Array.prototype.slice.call(widget.querySelectorAll(".fw-tab"));
   var current = "prod", autoTimer = null, inView = false, autoOn = false;
 
   /* one full pass = last unit's begin delay + its 4s traverse */
@@ -1470,11 +1464,6 @@
       sc.classList.toggle("is-active", on);
       sc.setAttribute("aria-hidden", on ? "false" : "true");
     });
-    tabs.forEach(function (t) {
-      var on = t.getAttribute("data-scene") === name;
-      t.classList.toggle("is-active", on);
-      t.setAttribute("aria-selected", on ? "true" : "false");
-    });
   }
 
   /* let the current scene finish ONE full pass, then hand over to the other */
@@ -1486,14 +1475,6 @@
       advance();
     }, CYCLE[current] + HOLD);
   }
-
-  /* tab clicks take over and start a fresh pass */
-  tabs.forEach(function (t) {
-    t.addEventListener("click", function () {
-      activate(t.getAttribute("data-scene"));
-      advance();
-    });
-  });
 
   /* reduced motion: freeze the diagram, no entrance, no auto-cycle */
   if (reduce) {

@@ -822,18 +822,8 @@ p{margin:0 0 1em}
 }
 
 /* ============================================================
-   HERO — process-flow widget: scene switcher + "Supply Chain"
+   HERO — process-flow widget: auto-cycling Production / Supply Chain
    ============================================================ */
-
-/* tabs (only rendered when JS is on) */
-.hero .fw-tabs{display:none}
-.js .hero .fw-tabs{display:flex;gap:8px;justify-content:flex-end;margin-bottom:14px}
-.hero .fw-tab{font:inherit;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  padding:6px 14px;border-radius:999px;cursor:pointer;
-  background:transparent;border:1px solid var(--line);color:var(--muted);
-  transition:color 200ms ease,border-color 200ms ease,background 200ms ease}
-.hero .fw-tab:hover{color:var(--text);border-color:var(--line-2)}
-.hero .fw-tab.is-active{background:var(--grad);border-color:transparent;color:#1a1405}
 
 /* base (no-JS): the Production scene is plain, Supply Chain is not rendered */
 .hero .fw-scene{position:relative}
