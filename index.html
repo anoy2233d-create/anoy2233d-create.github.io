@@ -1433,7 +1433,16 @@
   var scenes = Array.prototype.slice.call(widget.querySelectorAll(".fw-scene"));
   var tabs = Array.prototype.slice.call(widget.querySelectorAll(".fw-tab"));
   var current = "prod", autoTimer = null, inView = false, autoOn = false;
-  var AUTO_MS = 8000;
+
+  /* one full pass = last unit's begin delay + its 4s traverse */
+  var CYCLE = { prod: 5600, supply: 5200 };
+  var HOLD  = 800;                                 // beat to read the finished pass
+
+  /* JS drives one full pass per scene; without JS the markup loops forever */
+  Array.prototype.forEach.call(widget.querySelectorAll("animateMotion"), function (m) {
+    m.setAttribute("repeatCount", "1");
+    m.setAttribute("fill", "freeze");
+  });
 
   function svgOf(sc) { return sc ? sc.querySelector("svg") : null; }
   function hold(sc) { var s = svgOf(sc); if (s && s.pauseAnimations) s.pauseAnimations(); }
@@ -1443,15 +1452,23 @@
     if (restart && s.setCurrentTime) { try { s.setCurrentTime(0); } catch (e) { /* ignore */ } }
     if (s.unpauseAnimations) s.unpauseAnimations();
   }
+  /* display:none → reflow → back restarts every CSS animation in the scene */
+  function replay(sc) {
+    var prev = sc.style.display;
+    sc.style.display = "none";
+    void sc.offsetHeight;
+    sc.style.display = prev;
+  }
 
-  /* TASK 2 — cross-fade scenes; the incoming flow restarts from zero */
+  /* cross-fade scenes; the incoming pass always restarts from zero */
   function activate(name) {
     current = name;
     scenes.forEach(function (sc) {
       var on = sc.getAttribute("data-scene") === name;
+      if (on) { hold(sc); replay(sc); release(sc, true); }
+      else { hold(sc); }
       sc.classList.toggle("is-active", on);
       sc.setAttribute("aria-hidden", on ? "false" : "true");
-      if (on) release(sc, true); else hold(sc);
     });
     tabs.forEach(function (t) {
       var on = t.getAttribute("data-scene") === name;
@@ -1460,21 +1477,21 @@
     });
   }
 
-  /* TASK 3 — auto-cycle every 8s, only while the widget is in view */
-  function schedule() {
+  /* let the current scene finish ONE full pass, then hand over to the other */
+  function advance() {
     clearTimeout(autoTimer);
     if (reduce || !autoOn || !inView) return;
     autoTimer = setTimeout(function () {
       activate(current === "prod" ? "supply" : "prod");
-      schedule();
-    }, AUTO_MS);
+      advance();
+    }, CYCLE[current] + HOLD);
   }
 
-  /* tab clicks restart the 8s timer so it never fights the user */
+  /* tab clicks take over and start a fresh pass */
   tabs.forEach(function (t) {
     t.addEventListener("click", function () {
       activate(t.getAttribute("data-scene"));
-      schedule();
+      advance();
     });
   });
 
@@ -1490,22 +1507,33 @@
   /* ENTRANCE — matches the hero timeline (fade + scale at t=1200ms) */
   setTimeout(function () {
     widget.classList.add("in");
-    setTimeout(function () {                       // then release the active flow
+    setTimeout(function () {                       // then start the first pass
       widget.classList.add("fw-run");
       autoOn = true;
       scenes.forEach(function (sc) {
         if (sc.classList.contains("is-active")) release(sc, true); else hold(sc);
       });
-      schedule();
+      advance();
     }, 500);
   }, 1200);
 
-  /* pause the auto-cycle entirely while the widget is off-screen */
+  /* off-screen: stop the clock and freeze the flow; on return: replay it */
   if (window.IntersectionObserver) {
     new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
+        if (e.isIntersecting === inView) return;
         inView = e.isIntersecting;
-        if (inView) schedule(); else clearTimeout(autoTimer);
+        clearTimeout(autoTimer);
+        if (!autoOn) return;                       // entrance still pending
+        if (inView) {
+          scenes.forEach(function (sc) {
+            if (sc.classList.contains("is-active")) { replay(sc); release(sc, true); }
+            else hold(sc);
+          });
+          advance();
+        } else {
+          scenes.forEach(hold);
+        }
       });
     }, { threshold: 0.2 }).observe(widget);
   } else {
@@ -1526,6 +1554,8 @@
     if (!el) return;
     var cfg = TICK[key];
     var swap = function () {
+      var sc = el.closest(".fw-scene");
+      if (sc && !sc.classList.contains("is-active")) return;   // only tick the live scene
       el.classList.add("tick");                    // blur + fade out
       setTimeout(function () {
         var v = cfg.min + Math.random() * (cfg.max - cfg.min);
