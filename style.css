@@ -833,7 +833,7 @@ p{margin:0 0 1em}
 .js .hero .fw-stage{position:relative;width:100%;aspect-ratio:600/400}
 .js .hero .fw-scene{position:absolute;inset:0;display:block;
   opacity:0;transform:scale(.98);pointer-events:none;
-  transition:opacity 300ms ease,transform 300ms ease}
+  transition:opacity 700ms cubic-bezier(.4,0,.2,1),transform 700ms cubic-bezier(.4,0,.2,1)}
 .js .hero .fw-scene.is-active{opacity:1;transform:none;pointer-events:auto}
 .js .hero .fw-scene .fw-svg{height:100%}
 

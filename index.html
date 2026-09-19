@@ -1430,7 +1430,7 @@
 
   /* one full pass = last unit's begin delay + its 4s traverse */
   var CYCLE = { prod: 5600, supply: 5200 };
-  var HOLD  = 800;                                 // beat to read the finished pass
+  var HOLD  = 200;                                 // beat to read the finished pass
 
   /* JS drives one full pass per scene; without JS the markup loops forever */
   Array.prototype.forEach.call(widget.querySelectorAll("animateMotion"), function (m) {
@@ -1446,12 +1446,14 @@
     if (restart && s.setCurrentTime) { try { s.setCurrentTime(0); } catch (e) { /* ignore */ } }
     if (s.unpauseAnimations) s.unpauseAnimations();
   }
-  /* display:none → reflow → back restarts every CSS animation in the scene */
+  /* reset every CSS animation in the scene WITHOUT hiding it — display:none
+     would leave the incoming scene with no "before" style, so it would pop
+     in instead of cross-fading */
   function replay(sc) {
-    var prev = sc.style.display;
-    sc.style.display = "none";
-    void sc.offsetHeight;
-    sc.style.display = prev;
+    if (!sc.getAnimations) return;
+    sc.getAnimations({ subtree: true }).forEach(function (a) {
+      try { a.currentTime = 0; } catch (e) { /* ignore */ }
+    });
   }
 
   /* cross-fade scenes; the incoming pass always restarts from zero */
